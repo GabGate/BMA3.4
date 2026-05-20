@@ -1015,9 +1015,9 @@ function saveFixtures(arr) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// API-Sports Integration (v3.4)
+// API-Sports Integration (v3.4 - CORRECTED for Basketball API v1)
 // ═══════════════════════════════════════════════════════════════════════
-const API_BASE = "https://v3.basketball.api-sports.io";
+const API_BASE = "https://v1.basketball.api-sports.io";
 let teamCache = {};
 
 function updateApiStatusUI() {
@@ -1055,18 +1055,25 @@ async function testApiKey() {
   }
   document.getElementById('apiTestResult').innerHTML = '<span style="color:var(--ac);">⏳ Testing connection...</span>';
   try {
-    const resp = await fetch(`${API_BASE}/status`, {
+    // Use /leagues endpoint to test (basketball API v1)
+    const resp = await fetch(`${API_BASE}/leagues`, {
       headers: { 'x-apisports-key': state.apiKey }
     });
     if (resp.status === 200) {
-      document.getElementById('apiTestResult').innerHTML = '<span style="color:#10B981;">✅ API connection successful! Your key is valid.</span>';
+      const data = await resp.json();
+      if (data.response && data.response.length > 0) {
+        document.getElementById('apiTestResult').innerHTML = '<span style="color:#10B981;">✅ API connection successful! Your Basketball API key is valid.</span>';
+      } else {
+        document.getElementById('apiTestResult').innerHTML = '<span style="color:#F59E0B;">⚠️ API connected but no leagues returned. Key may be limited.</span>';
+      }
     } else if (resp.status === 401) {
       document.getElementById('apiTestResult').innerHTML = '<span style="color:#EF4444;">❌ Invalid API key. Check your key at api-sports.io</span>';
     } else {
-      document.getElementById('apiTestResult').innerHTML = `<span style="color:#F59E0B;">⚠️ API responded with status ${resp.status}. Your key may have rate limits.</span>`;
+      document.getElementById('apiTestResult').innerHTML = `<span style="color:#F59E0B;">⚠️ API responded with status ${resp.status}. Check your subscription.</span>`;
     }
   } catch(e) {
-    document.getElementById('apiTestResult').innerHTML = '<span style="color:#EF4444;">❌ Network error. Check your connection.</span>';
+    console.error(e);
+    document.getElementById('apiTestResult').innerHTML = '<span style="color:#EF4444;">❌ Network error. Check your connection. Make sure you have basketball subscription active.</span>';
   }
 }
 
@@ -1084,9 +1091,8 @@ async function searchTeamForAutoFill(teamSide) {
   showToast(`🔍 Searching for ${teamName}...`);
   
   try {
-    const leagueId = LEAGUES[state.league]?.apiLeague;
+    // Search for team by name (no league filter needed initially)
     let url = `${API_BASE}/teams?search=${encodeURIComponent(teamName)}`;
-    if (leagueId) url += `&league=${leagueId}`;
     
     const resp = await fetch(url, {
       headers: { 'x-apisports-key': state.apiKey }
@@ -1094,11 +1100,17 @@ async function searchTeamForAutoFill(teamSide) {
     const data = await resp.json();
     
     if (data.response && data.response.length > 0) {
-      const team = data.response[0];
+      // Find best match (prioritize teams from selected league if possible)
+      let team = data.response[0];
+      const leagueId = LEAGUES[state.league]?.apiLeague;
+      if (leagueId) {
+        const leagueMatch = data.response.find(t => t.league?.id === leagueId);
+        if (leagueMatch) team = leagueMatch;
+      }
       showToast(`✅ Found: ${team.name}. Fetching games...`);
       await fetchTeamGames(teamSide, team.id, team.name);
     } else {
-      showToast(`❌ Team "${teamName}" not found in ${state.league}`);
+      showToast(`❌ Team "${teamName}" not found. Try a different name or league.`);
     }
   } catch(e) {
     console.error(e);
@@ -1114,18 +1126,25 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
   }
   
   try {
-    const resp = await fetch(`${API_BASE}/games?team=${teamId}&league=${leagueId}&season=${new Date().getFullYear()}&last=3`, {
+    // Get current season
+    const currentYear = new Date().getFullYear();
+    let season = currentYear;
+    
+    // Fetch games
+    const resp = await fetch(`${API_BASE}/games?team=${teamId}&league=${leagueId}&season=${season}`, {
       headers: { 'x-apisports-key': state.apiKey }
     });
     const data = await resp.json();
     
     if (!data.response || data.response.length === 0) {
-      showToast(`⚠️ No recent games found for ${teamName}`);
+      showToast(`⚠️ No recent games found for ${teamName} in ${state.league}`);
       return;
     }
     
-    // Sort games by date descending (most recent first)
-    const games = data.response.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+    // Filter for regular season games and sort by date descending (most recent first)
+    let games = data.response.filter(g => g.season === season && (g.stage === "Regular Season" || !g.stage));
+    if (games.length === 0) games = data.response;
+    games = games.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
     
     // Update team name
     if (teamSide === 'A') {
@@ -1140,14 +1159,18 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
     for (let i = 0; i < games.length; i++) {
       const game = games[i];
       const isHome = game.teams.home.id === teamId;
-      const teamStats = isHome ? game.statistics?.home : game.statistics?.away;
-      const opponentStats = isHome ? game.statistics?.away : game.statistics?.home;
-      
       const teamScore = isHome ? game.scores.home.total : game.scores.away.total;
       const oppScore = isHome ? game.scores.away.total : game.scores.home.total;
       
+      // Fetch detailed statistics for this game
+      const statsResp = await fetch(`${API_BASE}/games/statistics?game=${game.id}&team=${teamId}`, {
+        headers: { 'x-apisports-key': state.apiKey }
+      });
+      const statsData = await statsResp.json();
       let fga = 0, tpa = 0;
-      if (teamStats) {
+      
+      if (statsData.response && statsData.response.length > 0) {
+        const teamStats = statsData.response[0];
         fga = teamStats.fieldGoals?.attempts || 0;
         tpa = teamStats.threePoints?.attempts || 0;
       }
@@ -1165,15 +1188,21 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
         state.gamesB[i] = gameData;
       }
       
-      // Defensive stats (opponent FG% allowed)
-      let oppFgPct = 0;
-      if (opponentStats && opponentStats.fieldGoals) {
-        const made = opponentStats.fieldGoals.made || 0;
-        const att = opponentStats.fieldGoals.attempts || 1;
-        oppFgPct = parseFloat((made / att).toFixed(3));
-      }
+      // Get opponent stats for defensive metrics
+      const oppId = isHome ? game.teams.away.id : game.teams.home.id;
+      const oppStatsResp = await fetch(`${API_BASE}/games/statistics?game=${game.id}&team=${oppId}`, {
+        headers: { 'x-apisports-key': state.apiKey }
+      });
+      const oppStatsData = await oppStatsResp.json();
       
-      let oppAst = opponentStats?.assists || 0;
+      let oppFgPct = 0, oppAst = 0;
+      if (oppStatsData.response && oppStatsData.response.length > 0) {
+        const oppStats = oppStatsData.response[0];
+        const fgMade = oppStats.fieldGoals?.made || 0;
+        const fgAtt = oppStats.fieldGoals?.attempts || 1;
+        oppFgPct = parseFloat((fgMade / fgAtt).toFixed(3));
+        oppAst = oppStats.assists || 0;
+      }
       
       if (teamSide === 'A') {
         state.defA[i] = { fgPct: oppFgPct, ast: oppAst };
@@ -1223,6 +1252,7 @@ async function autoFillFromAPI() {
     await fetchH2HData();
     showToast('✅ Auto-fill complete! Review and adjust if needed.');
   } catch(e) {
+    console.error(e);
     showToast('⚠️ Partial data loaded. Manual entry may be needed.');
   } finally {
     btn.disabled = false;
@@ -1235,20 +1265,21 @@ async function fetchH2HData() {
   if (!leagueId) return;
   
   try {
-    const resp = await fetch(`${API_BASE}/teams?search=${encodeURIComponent(state.teamAName)}`, {
+    // Get team IDs first
+    const respA = await fetch(`${API_BASE}/teams?search=${encodeURIComponent(state.teamAName)}`, {
       headers: { 'x-apisports-key': state.apiKey }
     });
-    const teamAData = await resp.json();
-    const resp2 = await fetch(`${API_BASE}/teams?search=${encodeURIComponent(state.teamBName)}`, {
+    const teamAData = await respA.json();
+    const respB = await fetch(`${API_BASE}/teams?search=${encodeURIComponent(state.teamBName)}`, {
       headers: { 'x-apisports-key': state.apiKey }
     });
-    const teamBData = await resp2.json();
+    const teamBData = await respB.json();
     
     if (teamAData.response?.length && teamBData.response?.length) {
       const teamAId = teamAData.response[0].id;
       const teamBId = teamBData.response[0].id;
       
-      const h2hResp = await fetch(`${API_BASE}/games?team=${teamAId}&vs=${teamBId}&league=${leagueId}&last=3`, {
+      const h2hResp = await fetch(`${API_BASE}/games?team=${teamAId}&vs=${teamBId}&league=${leagueId}`, {
         headers: { 'x-apisports-key': state.apiKey }
       });
       const h2hData = await h2hResp.json();
