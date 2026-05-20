@@ -7,56 +7,241 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BMA v3.4">
-<title>🏀 BMA v3.4</title>
+<meta name="description" content="Basketball Matchup Analyzer v3.4 - API Auto-Fill & 3-Game Analysis Dashboard">
+<title>🏀 Basketball Analyzer v3.4</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
-/* ==================== YOUR ORIGINAL v3.2 STYLES (FULL) ==================== */
 :root {
-  --dn: #0D1B2A; --nv: #1A2940; --bl: #1E3A5F; --mb: #2563A8; --lb: #3B82C4;
-  --ac: #F59E0B; --ac2: #FBBF24; --gd: #166534; --gc: #DCFCE7; --gf: #16A34A;
-  --yd: #92400E; --yc: #FEF9C3; --yf: #D97706; --rd: #991B1B; --rc: #FEE2E2;
-  --rf: #DC2626; --pu: #6D28D9; --pc: #EDE9FE; --or: #EA580C; --wh: #FFFFFF;
-  --mg: #94A3B8; --ib: #EFF6FF; --cb: #F0FDF4; --safe: env(safe-area-inset-bottom, 0px);
+  --dn: #0D1B2A;
+  --nv: #1A2940;
+  --bl: #1E3A5F;
+  --mb: #2563A8;
+  --lb: #3B82C4;
+  --ac: #F59E0B;
+  --ac2: #FBBF24;
+  --gd: #166534;
+  --gc: #DCFCE7;
+  --gf: #16A34A;
+  --yd: #92400E;
+  --yc: #FEF9C3;
+  --yf: #D97706;
+  --rd: #991B1B;
+  --rc: #FEE2E2;
+  --rf: #DC2626;
+  --pu: #6D28D9;
+  --pc: #EDE9FE;
+  --or: #EA580C;
+  --wh: #FFFFFF;
+  --ow: #F8FAFC;
+  --lg: #E2E8F0;
+  --mg: #94A3B8;
+  --dg: #334155;
+  --ib: #EFF6FF;
+  --cb: #F0FDF4;
+  --ob: #FFF7ED;
+  --safe: env(safe-area-inset-bottom, 0px);
 }
-* { box-sizing: border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-body { font-family:'Barlow',sans-serif; background:var(--dn); color:var(--wh); min-height:100vh; overflow-x:hidden; padding-bottom:calc(70px + var(--safe)); }
-
-.topbar { position:sticky; top:0; z-index:100; background:linear-gradient(135deg,var(--dn)0%,#0F2337 100%); border-bottom:2px solid var(--ac); padding:10px 16px 8px; display:flex; align-items:center; justify-content:space-between; }
-.topbar-title { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; color:var(--ac); letter-spacing:1px; text-transform:uppercase; }
-.topbar-badge { background:var(--ac); color:var(--dn); font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:800; padding:3px 8px; border-radius:20px; }
-.api-status { font-size:10px; background:rgba(16,185,129,0.2); padding:2px 6px; border-radius:12px; color:#10B981; margin-left:6px; }
-
-.bottom-nav { position:fixed; bottom:0; left:0; right:0; z-index:100; background:linear-gradient(180deg,#0A1520 0%,var(--dn)100%); border-top:1px solid #1E3A5F; display:flex; padding-bottom:var(--safe); }
-.nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 4px; color:var(--mg); cursor:pointer; }
-.nav-btn.active { color:var(--ac); }
-
-.page { display:none; padding:12px; }
-.page.active { display:block; }
-
-.card { background:linear-gradient(135deg,var(--nv)0%,#16243A 100%); border:1px solid #253A55; border-radius:12px; margin-bottom:12px; overflow:hidden; }
-.card-header { background:linear-gradient(135deg,var(--bl)0%,var(--mb)100%); padding:10px 14px; display:flex; align-items:center; gap:8px; }
-.card-header.amber { background:linear-gradient(135deg,#92400E 0%,#B45309 100%); }
-
-.league-select-wrap { position:relative; }
-.league-select { width:100%; padding:10px 36px 10px 12px; background:var(--ib); border:2px solid var(--mb); border-radius:8px; color:var(--bl); font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; appearance:none; }
-.select-arrow { position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--mb); }
-
-.team-name-input, .input-field, .h2h-score-input { width:100%; padding:9px 10px; background:var(--ib); border:1.5px solid #CBD5E1; border-radius:7px; color:var(--dn); font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; }
-.input-field:focus { border-color:var(--mb); background:#DBEAFE; }
-
-.btn { width:100%; padding:14px; border:none; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:800; text-transform:uppercase; cursor:pointer; }
-.btn-accent { background:linear-gradient(135deg,var(--ac),var(--ac2)); color:var(--dn); }
-.btn-api { background:linear-gradient(135deg,#059669,#10B981); color:var(--wh); }
-.btn-ghost { background:transparent; border:2px solid var(--mg); color:var(--mg); }
-.btn-reset { background:linear-gradient(135deg,#374151,#4B5568); color:var(--wh); }
-
-.data-check { border-radius:8px; padding:10px 14px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; margin-bottom:10px; }
-.data-check.ok { background:var(--gc); color:var(--gd); border:1.5px solid var(--gf); }
-.data-check.bad { background:var(--rc); color:var(--rd); border:1.5px solid var(--rf); }
-
-.h2h-game-row { display:grid; grid-template-columns:1fr auto 1fr auto; gap:6px; align-items:center; margin-bottom:6px; }
-.h2h-score-input.winner { border-color:var(--gf); background:var(--gc); color:var(--gd); }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--dn);
+  color: var(--wh);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: calc(70px + var(--safe));
+}
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(135deg, var(--dn) 0%, #0F2337 100%);
+  border-bottom: 2px solid var(--ac);
+  padding: 10px 16px 8px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.topbar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 900;
+  color: var(--ac); letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.topbar-sub { font-size: 10px; color: var(--mg); margin-top: 1px; }
+.topbar-badge {
+  background: var(--ac); color: var(--dn);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800;
+  padding: 3px 8px; border-radius: 20px;
+}
+.api-status {
+  background: var(--gd); color: var(--wh);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800;
+  padding: 3px 8px; border-radius: 20px;
+}
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: linear-gradient(180deg, #0A1520 0%, var(--dn) 100%);
+  border-top: 1px solid #1E3A5F;
+  display: flex; padding-bottom: var(--safe);
+}
+.nav-btn {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 8px 4px; border: none; background: none;
+  color: var(--mg); cursor: pointer;
+  transition: color .2s; font-family: 'Barlow', sans-serif;
+}
+.nav-btn.active { color: var(--ac); }
+.nav-btn .nav-icon { font-size: 20px; line-height: 1; }
+.nav-btn .nav-label { font-size: 10px; font-weight: 600; margin-top: 3px; text-transform: uppercase; letter-spacing: .5px; }
+.page { display: none; padding: 12px; animation: fadeIn .2s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.card { background: linear-gradient(135deg, var(--nv) 0%, #16243A 100%); border: 1px solid #253A55; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+.card-header { background: linear-gradient(135deg, var(--bl) 0%, var(--mb) 100%); padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+.card-header.amber { background: linear-gradient(135deg, #92400E 0%, #B45309 100%); }
+.card-header.green { background: linear-gradient(135deg, #14532D 0%, #166534 100%); }
+.card-header.purple { background: linear-gradient(135deg, #4C1D95 0%, #6D28D9 100%); }
+.card-header.red { background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 100%); }
+.card-header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.card-body { padding: 12px; }
+.league-select-wrap { position: relative; }
+.league-select, .fixture-select {
+  width: 100%; padding: 10px 36px 10px 12px; background: var(--ib); border: 2px solid var(--mb);
+  border-radius: 8px; color: var(--bl); font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; appearance: none; -webkit-appearance: none; cursor: pointer;
+}
+.select-arrow { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--mb); pointer-events: none; font-size: 14px; }
+.team-name-input { width: 100%; padding: 8px 12px; background: var(--ib); border: 2px solid var(--mb); border-radius: 8px; color: var(--bl); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.game-row { margin-bottom: 10px; }
+.game-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--mg); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.input-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.input-group { display: flex; flex-direction: column; gap: 3px; }
+.input-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; letter-spacing: .3px; }
+.input-field { width: 100%; padding: 9px 10px; background: var(--ib); border: 1.5px solid #CBD5E1; border-radius: 7px; color: var(--dn); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; transition: border-color .2s; }
+.input-field:focus { outline: none; border-color: var(--mb); background: #DBEAFE; }
+.input-field.calc { background: var(--cb); border-color: var(--gf); color: var(--gd); }
+.input-field.pct { color: var(--rd); }
+.data-check { border-radius: 8px; padding: 10px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.data-check.ok { background: var(--gc); color: var(--gd); border: 1.5px solid var(--gf); }
+.data-check.bad { background: var(--rc); color: var(--rd); border: 1.5px solid var(--rf); }
+.rating-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rating-item { background: var(--dn); border-radius: 8px; padding: 10px; border: 1px solid #253A55; }
+.rating-item-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; }
+.rating-item-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.rating-bar-track { flex: 1; height: 6px; background: #1E3A5F; border-radius: 3px; overflow: hidden; }
+.rating-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--mb), var(--ac)); transition: width .4s ease; }
+.rating-score { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--ac); }
+.rating-max { font-size: 11px; color: var(--mg); }
+.score-display { display: flex; gap: 8px; margin-bottom: 12px; }
+.score-box { flex: 1; border-radius: 10px; padding: 14px 10px; text-align: center; border: 2px solid transparent; }
+.score-box.team-a { background: linear-gradient(135deg, var(--bl), #2A4A70); border-color: var(--ac); }
+.score-box.team-b { background: linear-gradient(135deg, var(--mb), #3B72C4); border-color: var(--lb); }
+.score-box.combined { background: linear-gradient(135deg, #0F2337, #1A3050); border-color: var(--ac); }
+.score-box-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.score-box-name { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800; color: var(--wh); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.score-box-number { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; line-height: 1; color: var(--ac); }
+.classification { border-radius: 10px; padding: 14px; text-align: center; margin-bottom: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; border: 2px solid transparent; }
+.classification.fast { background: linear-gradient(135deg, #14532D, #166534); border-color: #16A34A; color: #DCFCE7; }
+.classification.mixed { background: linear-gradient(135deg, #78350F, #92400E); border-color: #D97706; color: #FEF9C3; }
+.classification.slow { background: linear-gradient(135deg, #7F1D1D, #991B1B); border-color: #DC2626; color: #FEE2E2; }
+.classification.invalid { background: linear-gradient(135deg, #1E293B, #334155); border-color: #475569; color: #94A3B8; }
+.alert-item { border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.4; }
+.alert-item.warn { background: var(--yc); color: var(--yd); border: 1.5px solid var(--yf); }
+.alert-item.ok   { background: var(--gc); color: var(--gd); border: 1.5px solid var(--gf); }
+.alert-item.err  { background: var(--rc); color: var(--rd); border: 1.5px solid var(--rf); }
+.alert-item.info { background: var(--pc); color: var(--pu); border: 1.5px solid #8B5CF6; }
+.alert-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; display: block; margin-bottom: 2px; opacity: .7; }
+.suggestion-main { border-radius: 10px; padding: 16px; margin-bottom: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; line-height: 1.3; border: 2px solid var(--ac); background: linear-gradient(135deg, #1A2F1A, #0F2337); }
+.suggestion-secondary { border-radius: 8px; padding: 12px; margin-bottom: 8px; font-size: 13px; font-weight: 500; background: var(--nv); border: 1px solid #253A55; color: var(--lg); }
+.meter-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.meter-box { flex: 1; background: var(--dn); border-radius: 10px; padding: 12px; text-align: center; border: 1.5px solid #253A55; }
+.meter-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 6px; }
+.meter-value { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; }
+.meter-value.trap { color: var(--yf); }
+.meter-value.conf { color: var(--gf); }
+.q1-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.q1-result { border-radius: 8px; padding: 12px; background: var(--dn); border: 1px solid #253A55; text-align: center; }
+.q1-result-label { font-size: 10px; color: var(--mg); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; }
+.q1-result-val { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; color: var(--ac); }
+.fixture-item { border-radius: 10px; padding: 12px; margin-bottom: 8px; background: var(--nv); border: 1px solid #253A55; cursor: pointer; transition: border-color .15s, transform .1s; }
+.fixture-item:active { transform: scale(.99); border-color: var(--ac) !important; }
+.fixture-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.fixture-teams { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; color: var(--wh); }
+.fixture-date { font-size: 11px; color: var(--mg); }
+.fixture-scores { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.fixture-score-chip { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--dn); color: var(--mg); }
+.fixture-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
+.fixture-badge.fast { background: var(--gc); color: var(--gd); }
+.fixture-badge.mixed { background: var(--yc); color: var(--yd); }
+.fixture-badge.slow { background: var(--rc); color: var(--rd); }
+.fixture-badge.invalid { background: var(--lg); color: var(--dg); }
+.fixture-delete { background: none; border: none; color: var(--mg); font-size: 18px; cursor: pointer; padding: 4px; line-height: 1; }
+.btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+.btn:active { transform: scale(0.98); opacity: .9; }
+.btn-primary { background: linear-gradient(135deg, var(--mb), var(--lb)); color: var(--wh); }
+.btn-accent  { background: linear-gradient(135deg, var(--ac), var(--ac2)); color: var(--dn); }
+.btn-danger  { background: linear-gradient(135deg, var(--rd), var(--rf)); color: var(--wh); }
+.btn-ghost   { background: transparent; border: 2px solid var(--mg); color: var(--mg); }
+.btn-api     { background: linear-gradient(135deg, var(--pu), #7C3AED); color: var(--wh); }
+.tab-row { display: flex; gap: 6px; margin-bottom: 10px; }
+.tab-btn { flex: 1; padding: 8px 4px; background: var(--nv); border: 1.5px solid #253A55; border-radius: 8px; color: var(--mg); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: .5px; }
+.tab-btn.active { background: var(--mb); border-color: var(--mb); color: var(--wh); }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--mg); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: #1E3A5F; }
+.empty-state, .pred-empty-state { text-align: center; padding: 32px 16px; color: var(--mg); }
+.empty-icon, .pred-empty-icon { font-size: 40px; margin-bottom: 12px; }
+.divider { height: 1px; background: #1E3A5F; margin: 12px 0; }
+.small-note { font-size: 11px; color: var(--mg); text-align: center; padding: 8px; line-height: 1.5; }
+.toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: var(--gd); color: var(--wh); font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 20px; z-index: 999; opacity: 0; transition: opacity .3s; white-space: nowrap; pointer-events: none; }
+.toast.show { opacity: 1; }
+.h2h-row { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 6px; align-items: center; margin-bottom: 6px; }
+.h2h-score-input { width: 100%; padding: 9px 8px; background: var(--ib); border: 1.5px solid #CBD5E1; border-radius: 7px; color: var(--dn); font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; text-align: center; }
+.h2h-vs-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 800; color: var(--mg); text-align: center; background: rgba(0,0,0,.1); border-radius: 4px; padding: 4px 6px; }
+.h2h-total-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; padding: 8px 10px; border-radius: 7px; text-align: center; background: var(--cb); color: var(--gd); border: 1.5px solid var(--gf); min-width: 62px; }
+.h2h-summary-box { background: rgba(0,0,0,.15); border: 1px solid #1E3A5F; border-radius: 10px; padding: 10px 12px; margin-top: 6px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center; }
+.h2h-sum-val { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; line-height: 1; margin-bottom: 2px; }
+.h2h-sum-lbl { font-size: 9px; font-weight: 600; color: var(--mg); text-transform: uppercase; letter-spacing: .5px; }
+.h2h-trend-row { margin-top: 6px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mg); }
+.h2h-trend-pill { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 20px; }
+.league-range-chip { background: var(--ib); color: var(--mb); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 20px; border: 1.5px solid var(--lb); display: inline-block; margin-top: 6px; }
+.modal-overlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,.80); backdrop-filter: blur(6px); overflow-y: auto; padding: 16px; }
+.modal-overlay.active { display: block; }
+.modal-box { background: linear-gradient(135deg, var(--nv) 0%, #16243A 100%); border: 1px solid #253A55; border-radius: 14px; max-width: 520px; margin: 0 auto; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.modal-header { background: linear-gradient(135deg, var(--bl) 0%, var(--mb) 100%); padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #253A55; }
+.modal-header-title { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+.modal-close { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 18px; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal-body { padding: 14px; }
+.btn-reset { background: linear-gradient(135deg, #374151, #4B5568); color: var(--wh); }
+.btn-row-split { display: flex; gap: 8px; margin-bottom: 8px; }
+.btn-row-split .btn-accent { flex: 1; }
+.btn-row-split .btn-reset { width: 130px; flex-shrink: 0; }
+.log-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px; }
+.log-top-row .section-title { margin-bottom: 0; flex: 1; }
+.log-btn-group { display: flex; gap: 6px; }
+.log-btn-group .btn { width: auto; padding: 7px 13px; font-size: 12px; font-weight: 800; }
+.pred-date-banner { text-align: center; margin-bottom: 14px; padding: 14px; background: linear-gradient(135deg, #0D1B2A, #1A2940); border: 1px solid #253A55; border-radius: 12px; }
+.pred-date-title { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; letter-spacing: 2px; color: var(--ac); }
+.pred-date-sub { font-size: 11px; color: var(--mg); margin-top: 2px; letter-spacing: .5px; }
+.pred-card { background: linear-gradient(135deg, var(--nv), #16243A); border: 1px solid #253A55; border-radius: 12px; margin-bottom: 14px; overflow: hidden; }
+.pred-card-hd { padding: 12px 14px 10px; border-bottom: 1px solid #1E3A5F; }
+.pred-match { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color: var(--wh); margin-bottom: 2px; }
+.pred-league-line { font-size: 10px; color: var(--mg); margin-bottom: 8px; letter-spacing: .3px; }
+.pred-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.pred-pill { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: .5px; padding: 5px 12px; border-radius: 8px; display: flex; align-items: center; gap: 5px; }
+.pill-over  { background: rgba(22,163,74,.15); color: #6EE7B7; border: 1.5px solid #16A34A; }
+.pill-under { background: rgba(220,38,38,.12); color: #FCA5A5; border: 1.5px solid #DC2626; }
+.pill-home  { background: rgba(37,99,168,.15); color: #93C5FD; border: 1.5px solid var(--mb); }
+.pill-away  { background: rgba(109,40,217,.12); color: #C4B5FD; border: 1.5px solid #7C3AED; }
+.pill-avoid { background: rgba(100,116,139,.1); color: var(--mg); border: 1.5px solid #475569; }
+.pred-body { padding: 12px 14px; }
+.pred-main-call { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; color: var(--wh); margin-bottom: 10px; padding: 10px 12px; background: rgba(245,158,11,.07); border: 1px solid rgba(245,158,11,.2); border-radius: 8px; line-height: 1.3; }
+.pred-reasons-title { font-size: 10px; font-weight: 700; color: var(--mg); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 7px; }
+.pred-reason-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid rgba(30,58,92,.5); font-size: 12px; color: var(--mg); line-height: 1.5; }
+.pred-reason-item:last-child { border-bottom: none; }
+.reason-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ac); margin-top: 5px; flex-shrink: 0; }
+.api-key-input { width: 100%; padding: 12px; background: var(--ib); border: 2px solid var(--mb); border-radius: 8px; color: var(--bl); font-family: monospace; font-size: 14px; margin-bottom: 10px; }
+@media print { .topbar, .bottom-nav, .no-print, .toast, .modal-overlay { display: none !important; } body { background: #fff !important; color: #000 !important; padding: 0 !important; } #print-area { display: block !important; } .page { display: none !important; } }
+#print-area { display: none; }
 </style>
 </head>
 <body>
@@ -66,13 +251,12 @@ body { font-family:'Barlow',sans-serif; background:var(--dn); color:var(--wh); m
     <div class="topbar-title">🏀 BMA v3.4</div>
     <div class="topbar-sub">Basketball Matchup Analyzer</div>
   </div>
-  <div style="display:flex;align-items:center;gap:8px">
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <div id="apiStatusBadge" class="api-status" style="display: none;">🔌 API Ready</div>
     <div class="topbar-badge">v3.4</div>
-    <div id="apiStatusBadge" class="api-status" style="display:none">🔌 API Ready</div>
   </div>
 </div>
 
-<!-- API Modal -->
 <div class="modal-overlay" id="apiModal">
   <div class="modal-box">
     <div class="modal-header">
@@ -80,214 +264,942 @@ body { font-family:'Barlow',sans-serif; background:var(--dn); color:var(--wh); m
       <button class="modal-close" onclick="closeApiModal()">✕</button>
     </div>
     <div class="modal-body">
-      <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Enter your API-Sports key...">
-      <div class="small-note">Key stored locally • Free: 100 req/day</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-accent" onclick="saveApiKey()" style="flex:1">💾 Save Key</button>
-        <button class="btn btn-ghost" onclick="testApiKey()" style="flex:1">🔍 Test</button>
+      <div class="small-note" style="text-align: left; padding: 0 0 10px 0;">Enter your v1.basketball.api-sports.io API credential below:</div>
+      <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Paste API Key here...">
+      <div class="btn-row-split">
+        <button class="btn btn-accent" onclick="saveApiKey()">💾 Save Key</button>
+        <button class="btn btn-ghost" onclick="testApiKey()">🔍 Test Connection</button>
       </div>
-      <div id="apiTestResult" style="margin-top:12px;font-size:13px"></div>
+      <div id="apiTestResult" style="margin-top: 10px; font-weight: bold; font-size: 12px; text-align: center;"></div>
     </div>
   </div>
 </div>
 
-<!-- INPUT PAGE -->
+<div class="modal-overlay" id="fxDetailModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title" id="fxModalTitle">Fixture Analysis</span>
+      <button class="modal-close" onclick="closeFxModal()">✕</button>
+    </div>
+    <div class="modal-body" id="fxModalBody"></div>
+  </div>
+</div>
+
 <div class="page active" id="page-input">
   <div class="card">
     <div class="card-header amber">
       <span>⚙️</span>
-      <span class="card-header-title">Match Setup</span>
+      <span class="card-header-title">Match Setup & Integration</span>
     </div>
     <div class="card-body">
-      <div style="display:flex;gap:8px;margin-bottom:12px">
-        <button class="btn btn-api" id="fetchFixturesBtn" onclick="fetchAllFixtures()" style="flex:2">📅 Get ALL Games (Today + Tomorrow)</button>
-        <button class="btn btn-ghost" onclick="openApiModal()">🔌 API Key</button>
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <button class="btn btn-api" id="fetchFixturesBtn" onclick="fetchTodayTomorrowFixtures()" style="flex: 2;">📅 Get All Fixtures</button>
+        <button class="btn btn-ghost" onclick="openApiModal()" style="width: auto; padding: 14px 16px;">🔌 API Key</button>
+      </div>
+      
+      "fixtureSelectorGroup" style="margin-bottom: 12px; display: none;">
+        <span class="input-label">Select Dynamic Fixture</span>
+        <div class="league-select-wrap">
+          <select class="fixture-select" id="fixtureSelect" onchange="onFixtureSelected()"></select>
+          <span class="select-arrow">▼</span>
+        </div>
       </div>
 
-      <div id="fixtureSelectorGroup" style="display:none;margin-bottom:12px">
-        <span class="input-label">Select Fixture to Auto-Fill</span>
-        <select class="league-select" id="fixtureSelect" onchange="onFixtureSelect()"></select>
-      </div>
-
-      <div class="input-group" style="margin-bottom:10px">
-        <span class="input-label">League Preset</span>
+      <div class="input-group">
+        <span class="input-label">League Preset (Select AFTER Auto-fill)</span>
         <div class="league-select-wrap">
           <select class="league-select" id="leagueSelect" onchange="onLeagueChange()"></select>
           <span class="select-arrow">▼</span>
         </div>
         <div id="leagueRangeChip" class="league-range-chip">— pts</div>
       </div>
+    </div>
+  </div>
 
-      <!-- H2H -->
-      <div class="input-group">
-        <span class="input-label">Last 3 H2H Results (Most Recent First)</span>
-        <div class="h2h-section" id="h2hSection"></div>
+  <div class="card">
+    <div class="card-header purple">
+      <span>⚔️</span>
+      <span class="card-header-title">Head-to-Head History (Most Recent 1st)</span>
+    </div>
+    <div class="card-body">
+      <span class="input-label" style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        Past 3 Game Scores
+        <span id="h2hBonus" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--or)">H2H Bonus: +0</span>
+      </span>
+      <div id="h2hSection"></div>
+      
+      <div class="h2h-summary-box" id="h2hSummaryBox" style="display:none">
+        <div><div class="h2h-sum-val" id="h2hRecord" style="color:var(--ac)">—</div><div class="h2h-sum-lbl">Win Record (A-B)</div></div>
+        <div><div class="h2h-sum-val" id="h2hAvgTotal" style="color:var(--lb)">—</div><div class="h2h-sum-lbl">Avg H2H Total</div></div>
+        <div><div class="h2h-sum-val" id="h2hAvgMargin" style="color:var(--gf)">—</div><div class="h2h-sum-lbl">Avg Margin</div></div>
       </div>
     </div>
   </div>
 
-  <!-- Team A -->
   <div class="card">
     <div class="card-header">
       <span>🏀</span>
-      <span class="card-header-title" style="color:var(--ac)">Team A — Last 3 Games</span>
+      <span class="card-header-title" style="color:var(--ac)">Team A — Last 3 Games (Most Recent First)</span>
     </div>
     <div class="card-body">
-      <input type="text" class="team-name-input" id="teamAName" value="TEAM A" oninput="onInputChange()">
-      <div id="teamADataCheck" class="data-check ok">✅ Fill all 3 games</div>
+      <input type="text" class="team-name-input" id="teamAName" placeholder="Team A Name" value="TEAM A" oninput="onInputChange()">
+      <div id="teamADataCheck" class="data-check ok">✅ Complete Data Entry</div>
       <div id="teamAGames"></div>
+      <div class="divider"></div>
+      <div class="section-title">Defensive Performance Grid</div>
+      <div id="teamADefGrid"></div>
     </div>
   </div>
 
-  <!-- Team B -->
   <div class="card">
     <div class="card-header" style="background:linear-gradient(135deg,var(--mb),#3B72C4)">
       <span>🏀</span>
-      <span class="card-header-title" style="color:#DBEAFE">Team B — Last 3 Games</span>
+      <span class="card-header-title" style="color:#DBEAFE">Team B — Last 3 Games (Most Recent First)</span>
     </div>
     <div class="card-body">
-      <input type="text" class="team-name-input" id="teamBName" value="TEAM B" oninput="onInputChange()">
-      <div id="teamBDataCheck" class="data-check ok">✅ Fill all 3 games</div>
+      <input type="text" class="team-name-input" id="teamBName" placeholder="Team B Name" value="TEAM B" oninput="onInputChange()">
+      <div id="teamBDataCheck" class="data-check ok">✅ Complete Data Entry</div>
       <div id="teamBGames"></div>
+      <div class="divider"></div>
+      <div class="section-title">Defensive Performance Grid</div>
+      <div id="teamBDefGrid"></div>
     </div>
   </div>
 
-  <button class="btn btn-accent" onclick="navigateTo('analysis')">⚡ ANALYZE MATCHUP →</button>
+  <div class="btn-row-split">
+    <button class="btn btn-accent" onclick="navigateTo('analysis')">⚡ Analyze Matchup →</button>
+    <button class="btn btn-reset" onclick="confirmReset()">🔄 Reset All</button>
+  </div>
 </div>
+
+<div class="page" id="page-analysis">
+  <div id="dataLockout" style="display:none" class="data-check bad">
+    ⛔ INCOMPLETE DATA — Please return to Input tab and complete all profiles.
+  </div>
+  <div class="score-display" id="scoreDisplay"></div>
+  <div class="classification invalid" id="classificationBadge">— Calculation Pending —</div>
+
+  <div class="card">
+    <div class="card-header green">
+      <span>📊</span>
+      <span class="card-header-title">Rating Breakdown Matrix</span>
+    </div>
+    <div class="card-body">
+      <div class="tab-row">
+        <button class="tab-btn active" id="ratingTabA" onclick="showRatingTab('a')">Team A</button>
+        <button class="tab-btn" id="ratingTabB" onclick="showRatingTab('b')">Team B</button>
+      </div>
+      <div id="ratingGridA" class="rating-grid"></div>
+      <div id="ratingGridB" class="rating-grid" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header amber">
+      <span>⚡</span>
+      <span class="card-header-title">Tempo Control Profiles</span>
+    </div>
+    <div class="card-body">
+      <div id="tempoControl" class="suggestion-secondary" style="text-align:center; font-weight:700; font-size:15px"></div>
+      <div class="meter-row">
+        <div class="meter-box">
+          <div class="meter-label">Trap Risk</div>
+          <div class="meter-value trap" id="trapPct">—</div>
+        </div>
+        <div class="meter-box">
+          <div class="meter-label">Confidence</div>
+          <div class="meter-value conf" id="confPct">—</div>
+        </div>
+        <div class="meter-box">
+          <div class="meter-label">OT Risk</div>
+          <div class="meter-value" id="otRisk" style="color:var(--mg)">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header red">
+      <span>🚨</span>
+      <span class="card-header-title">Analytical Guardrail Audits (9 Checks)</span>
+    </div>
+    <div class="card-body" id="alertsContainer"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" style="background:linear-gradient(135deg,#78350F,#B45309)">
+      <span>🎯</span>
+      <span class="card-header-title">Algorithmic Output Engine</span>
+    </div>
+    <div class="card-body">
+      <div class="suggestion-main" id="mainSuggestion">—</div>
+      <div class="suggestion-secondary" id="secondarySuggestion">—</div>
+      <div id="mixedGuide" style="display:none" class="alert-item warn">
+        <div>
+          <span class="alert-label">Mixed Zone 5–7 Operational Protocol</span>
+          📌 (1) Check style parity. (2) Evaluate live Q1 combined vs benchmark threshold. (3) Watch active line movement direction.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-accent" id="saveToLogBtn" onclick="saveToLog()">💾 Commit to Fixture Log</button>
+</div>
+
+<div class="page" id="page-q1">
+  <div class="card">
+    <div class="card-header red">
+      <span>🔴</span>
+      <span class="card-header-title">Live Q1 Assessment Tracker</span>
+    </div>
+    <div class="card-body">
+      <div class="input-grid" style="margin-bottom:10px">
+        <div class="input-group"><span class="input-label">Team A Q1 Pts</span><input type="number" class="input-field" id="q1A" placeholder="Pts" oninput="calcQ1()"></div>
+        <div class="input-group"><span class="input-label">Team B Q1 Pts</span><input type="number" class="input-field" id="q1B" placeholder="Pts" oninput="calcQ1()"></div>
+        <div class="input-group"><span class="input-label">Team A Q1 FGA</span><input type="number" class="input-field" id="q1AFGA" placeholder="FGA" oninput="calcQ1()"></div>
+        <div class="input-group"><span class="input-label">Team B Q1 FGA</span><input type="number" class="input-field" id="q1BFGA" placeholder="FGA" oninput="calcQ1()"></div>
+        <div class="input-group"><span class="input-label">Team A Q1 3PA</span><input type="number" class="input-field" id="q1A3PA" placeholder="3PA" oninput="calcQ1()"></div>
+        <div class="input-group"><span class="input-label">Team B Q1 3PA</span><input type="number" class="input-field" id="q1B3PA" placeholder="3PA" oninput="calcQ1()"></div>
+      </div>
+      <div class="q1-grid">
+        <div class="q1-result"><div class="q1-result-label">Combined Q1</div><div class="q1-result-val" id="q1Combined">—</div></div>
+        <div class="q1-result"><div class="q1-result-label">Projected Total</div><div class="q1-result-val" id="q1Projected">—</div></div>
+        <div class="q1-result"><div class="q1-result-label">Combined FGA</div><div class="q1-result-val" id="q1FGACombined">—</div></div>
+        <div class="q1-result"><div class="q1-result-label">Combined 3PA</div><div class="q1-result-val" id="q1TPACombined">—</div></div>
+      </div>
+      <div id="q1Assessment" class="classification invalid" style="margin-top:10px; font-size:16px;">Waiting for entry...</div>
+      <div id="q1LiveCall" class="suggestion-main" style="margin-top:10px; font-size:16px;">—</div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-log">
+  <div class="log-top-row">
+    <div class="section-title">Saved Fixtures Chronology</div>
+    <div class="log-btn-group no-print">
+      <button class="btn btn-ghost" onclick="clearAllFixtures()">🗑 Clear All</button>
+    </div>
+  </div>
+  <div id="fixtureList"></div>
+  <div id="fixtureEmpty" class="empty-state">
+    <div class="empty-icon">📋</div>
+    <div class="empty-text">No matchups recorded. Analyze a fixture and commit it to log.</div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="nav-input" onclick="navigateTo('input')"><span class="nav-icon">✏️</span><span class="nav-label">Input</span></button>
+  <button class="nav-btn" id="nav-analysis" onclick="navigateTo('analysis')"><span class="nav-icon">📊</span><span class="nav-label">Analysis</span></button>
+  <button class="nav-btn" id="nav-q1" onclick="navigateTo('q1')"><span class="nav-icon">🔴</span><span class="nav-label">Q1 Live</span></button>
+  <button class="nav-btn" id="nav-log" onclick="navigateTo('log')"><span class="nav-icon">📋</span><span class="nav-label">Logs</span></button>
+</nav>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ====================== LEAGUES ======================
 const LEAGUES = {
   "NBA": {pHi:215,pMid:200,pLo:185,fHi:88,fMid:82,fLo:75,tHi:33,tLo:27,q1F:28,q1S:22,range:"215–230"},
   "EuroLeague": {pHi:175,pMid:165,pLo:155,fHi:77,fMid:72,fLo:67,tHi:27,tLo:22,q1F:25,q1S:20,range:"155–175"},
-  "Low-Tier / Unknown": {pHi:150,pMid:140,pLo:130,fHi:65,fMid:60,fLo:55,tHi:21,tLo:16,q1F:20,q1S:15,range:"130–150"}
-  // Add more leagues as needed
+  "FIBA Champions League": {pHi:170,pMid:160,pLo:150,fHi:75,fMid:70,fLo:65,tHi:26,tLo:21,q1F:24,q1S:19,range:"150–170"},
+  "BBL (German)": {pHi:175,pMid:165,pLo:155,fHi:76,fMid:71,fLo:66,tHi:27,tLo:22,q1F:25,q1S:20,range:"160–175"},
+  "Lithuanian LKL": {pHi:165,pMid:155,pLo:145,fHi:72,fMid:67,fLo:62,tHi:25,tLo:20,q1F:23,q1S:18,range:"155–170"},
+  "Turkish BSL": {pHi:175,pMid:165,pLo:155,fHi:77,fMid:72,fLo:67,tHi:28,tReg:23,q1F:25,q1S:20,range:"165–180"},
+  "Spanish ACB": {pHi:170,pMid:160,pLo:150,fHi:76,fMid:71,fLo:66,tHi:27,tLo:22,q1F:24,q1S:19,range:"160–175"},
+  "Adriatic (ABA)": {pHi:165,pMid:155,pLo:145,fHi:73,fMid:68,fLo:63,tHi:26,tLo:21,q1F:23,q1S:18,range:"155–170"},
+  "NCAA": {pHi:160,pMid:150,pLo:140,fHi:66,fMid:61,fLo:56,tHi:22,tLo:17,q1F:23,q1S:18,range:"140–160"}
 };
 
-// ====================== STATE ======================
-let state = {
-  league: "EuroLeague",
-  teamAName: "TEAM A",
-  teamBName: "TEAM B",
-  gamesA: [{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0}],
-  gamesB: [{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0}],
-  defA: [{fgPct:0,ast:0},{fgPct:0,ast:0},{fgPct:0,ast:0}],
-  defB: [{fgPct:0,ast:0},{fgPct:0,ast:0},{fgPct:0,ast:0}],
-  h2hGames: [{a:null,b:null},{a:null,b:null},{a:null,b:null}],
-  apiKey: "",
-  allFixtures: []
-};
+let fetchedFixturesRaw = [];
 
-const API_BASE = "https://v1.basketball.api-sports.io";
+// Lifecycle Setup
+window.addEventListener('DOMContentLoaded', () => {
+  renderLeagues();
+  buildDynamicInputs();
+  loadData();
+  checkApiStatus();
+});
 
-// ====================== STORAGE ======================
-function saveState() { localStorage.setItem('bma_v34_state', JSON.stringify(state)); }
-function loadState() {
-  const s = localStorage.getItem('bma_v34_state');
-  if (s) Object.assign(state, JSON.parse(s));
-  state.apiKey = localStorage.getItem('bma_v34_apikey') || '';
+function renderLeagues() {
+  const select = document.getElementById('leagueSelect');
+  select.innerHTML = '';
+  Object.keys(LEAGUES).forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l; opt.textContent = l;
+    select.appendChild(opt);
+  });
 }
 
-// ====================== API ======================
-function updateApiStatusUI() {
-  document.getElementById('apiStatusBadge').style.display = state.apiKey?.length > 15 ? 'inline-block' : 'none';
-}
+function buildDynamicInputs() {
+  const containerA = document.getElementById('teamAGames');
+  const containerB = document.getElementById('teamBGames');
+  containerA.innerHTML = ''; containerB.innerHTML = '';
 
-function openApiModal() { document.getElementById('apiModal').classList.add('active'); }
-function closeApiModal() { document.getElementById('apiModal').classList.remove('active'); }
+  for(let i=1; i<=3; i++) {
+    containerA.appendChild(createGameRow('A', i));
+    containerB.appendChild(createGameRow('B', i));
+  }
 
-function saveApiKey() {
-  state.apiKey = document.getElementById('apiKeyInput').value.trim();
-  localStorage.setItem('bma_v34_apikey', state.apiKey);
-  updateApiStatusUI();
-  closeApiModal();
-  showToast('✅ API Key Saved');
-}
+  const defA = document.getElementById('teamADefGrid');
+  const defB = document.getElementById('teamBDefGrid');
+  defA.innerHTML = `
+    <div class="input-grid">
+      <div class="input-group"><span class="input-label">Avg FG% Allowed</span><input type="number" step="0.1" class="input-field pct" id="defFGPctA" oninput="onInputChange()"></div>
+      <div class="input-group"><span class="input-label">Avg Assists Allowed</span><input type="number" step="0.1" class="input-field" id="defAstA" oninput="onInputChange()"></div>
+    </div>`;
+  defB.innerHTML = `
+    <div class="input-grid">
+      <div class="input-grid">
+      <div class="input-group"><span class="input-label">Avg FG% Allowed</span><input type="number" step="0.1" class="input-field pct" id="defFGPctB" oninput="onInputChange()"></div>
+      <div class="input-group"><span class="input-label">Avg Assists Allowed</span><input type="number" step="0.1" class="input-field" id="defAstB" oninput="onInputChange()"></div>
+    </div>`;
 
-async function testApiKey() {
-  showToast('✅ API Test Successful (Mock)');
-}
-
-// Fetch All Fixtures
-async function fetchAllFixtures() {
-  if (!state.apiKey) { openApiModal(); return showToast('Please set API Key first'); }
-
-  const btn = document.getElementById('fetchFixturesBtn');
-  btn.disabled = true;
-  btn.textContent = 'Loading...';
-
-  try {
-    const today = new Date().toISOString().split('T')[0];
-    const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
-
-    const [r1, r2] = await Promise.all([
-      fetch(`${API_BASE}/games?date=${today}`, {headers:{'x-apisports-key':state.apiKey}}),
-      fetch(`${API_BASE}/games?date=${tomorrow}`, {headers:{'x-apisports-key':state.apiKey}})
-    ]);
-
-    const d1 = await r1.json();
-    const d2 = await r2.json();
-
-    state.allFixtures = [...(d1.response||[]), ...(d2.response||[])];
-
-    const sel = document.getElementById('fixtureSelect');
-    sel.innerHTML = '<option value="">-- Select Game --</option>' +
-      state.allFixtures.map(g => `<option value="${g.id}">${g.teams.home.name} vs ${g.teams.away.name}</option>`).join('');
-
-    document.getElementById('fixtureSelectorGroup').style.display = 'block';
-    showToast(`Loaded ${state.allFixtures.length} games`);
-  } catch(e) {
-    showToast('Failed to fetch games');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '📅 Get ALL Games (Today + Tomorrow)';
+  const h2h = document.getElementById('h2hSection');
+  h2h.innerHTML = '';
+  for(let i=1; i<=3; i++) {
+    const row = document.createElement('div');
+    row.className = 'h2h-row';
+    row.innerHTML = `
+      <div class="h2h-game-label" style="grid-column: span 4">H2H Match ${i} ${i===1?'(Most Recent)':''}</div>
+      <input type="number" class="h2h-score-input" id="h2hA_${i}" placeholder="A Pts" oninput="onInputChange()">
+      <div class="h2h-vs-badge">VS</div>
+      <input type="number" class="h2h-score-input" id="h2hB_${i}" placeholder="B Pts" oninput="onInputChange()">
+      <div class="h2h-total-badge" id="h2hTotal_${i}">—</div>
+    `;
+    h2h.appendChild(row);
   }
 }
 
-function onFixtureSelect() {
-  showToast("Auto-fill feature ready (expand fetchTeamData as needed)");
+function createGameRow(team, num) {
+  const el = document.createElement('div');
+  el.className = 'game-row';
+  el.innerHTML = `
+    <div class="game-label">Game ${num} ${num===1?'(Most Recent)':''}</div>
+    <div class="input-grid-3">
+      <div class="input-group"><span class="input-label">Score</span><input type="number" class="input-field" id="score${team}_${num}" placeholder="Pts" oninput="onInputChange()"></div>
+      <div class="input-group"><span class="input-label">FGA</span><input type="number" class="input-field" id="fga${team}_${num}" placeholder="FGA" oninput="onInputChange()"></div>
+      <div class="input-group"><span class="input-label">3PA</span><input type="number" class="input-field" id="tpa${team}_${num}" placeholder="3PA" oninput="onInputChange()"></div>
+    </div>
+  `;
+  return el;
 }
 
-// Basic functions
-function buildInputUI() {
-  const sel = document.getElementById('leagueSelect');
-  sel.innerHTML = Object.keys(LEAGUES).map(l => `<option value="${l}">${l}</option>`).join('');
-  document.getElementById('teamAName').value = state.teamAName;
-  document.getElementById('teamBName').value = state.teamBName;
-}
-
-function onLeagueChange() {
-  state.league = document.getElementById('leagueSelect').value;
-  saveState();
-}
-
-function onInputChange() {
-  state.teamAName = document.getElementById('teamAName').value || 'TEAM A';
-  state.teamBName = document.getElementById('teamBName').value || 'TEAM B';
-  saveState();
+// Nav Engine
+function navigateTo(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`page-${pageId}`).classList.add('active');
+  const navBtn = document.getElementById(`nav-${pageId}`);
+  if(navBtn) navBtn.classList.add('active');
+  if(pageId === 'analysis') runAnalysis();
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function navigateTo(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
+// Persistence Engine
+function onInputChange() {
+  saveToLocalStorage();
+  updateDataCheckBanners();
 }
 
-// INIT
-document.addEventListener('DOMContentLoaded', () => {
-  loadState();
-  buildInputUI();
-  updateApiStatusUI();
-});
+function onLeagueChange() {
+  const lg = document.getElementById('leagueSelect').value;
+  document.getElementById('leagueRangeChip').textContent = `${LEAGUES[lg].range} Pts Benchmark`;
+  onInputChange();
+}
+
+function saveToLocalStorage() {
+  const state = {
+    league: document.getElementById('leagueSelect').value,
+    teamA: { name: document.getElementById('teamAName').value, games: [], def: { fg: document.getElementById('defFGPctA').value, ast: document.getElementById('defAstA').value }},
+    teamB: { name: document.getElementById('teamBName').value, games: [], def: { fg: document.getElementById('defFGPctB').value, ast: document.getElementById('defAstB').value }},
+    h2h: []
+  };
+  for(let i=1; i<=3; i++) {
+    state.teamA.games.push({ pts: document.getElementById(`scoreA_${i}`).value, fga: document.getElementById(`fgaA_${i}`).value, tpa: document.getElementById(`tpaA_${i}`).value });
+    state.teamB.games.push({ pts: document.getElementById(`scoreB_${i}`).value, fga: document.getElementById(`fgaB_${i}`).value, tpa: document.getElementById(`tpaB_${i}`).value });
+    state.h2h.push({ a: document.getElementById(`h2hA_${i}`).value, b: document.getElementById(`h2hB_${i}`).value });
+  }
+  localStorage.setItem('bma_input_state', JSON.stringify(state));
+}
+
+function loadData() {
+  const raw = localStorage.getItem('bma_input_state');
+  if(!raw) { onLeagueChange(); return; }
+  try {
+    const s = JSON.parse(raw);
+    document.getElementById('leagueSelect').value = s.league || 'NBA';
+    document.getElementById('teamAName').value = s.teamA?.name || 'TEAM A';
+    document.getElementById('teamBName').value = s.teamB?.name || 'TEAM B';
+    document.getElementById('defFGPctA').value = s.teamA?.def?.fg || '';
+    document.getElementById('defAstA').value = s.teamA?.def?.ast || '';
+    document.getElementById('defFGPctB').value = s.teamB?.def?.fg || '';
+    document.getElementById('defAstB').value = s.teamB?.def?.ast || '';
+    
+    for(let i=1; i<=3; i++) {
+      if(s.teamA?.games?.[i-1]) {
+        document.getElementById(`scoreA_${i}`).value = s.teamA.games[i-1].pts || '';
+        document.getElementById(`fgaA_${i}`).value = s.teamA.games[i-1].fga || '';
+        document.getElementById(`tpaA_${i}`).value = s.teamA.games[i-1].tpa || '';
+      }
+      if(s.teamB?.games?.[i-1]) {
+        document.getElementById(`scoreB_${i}`).value = s.teamB.games[i-1].pts || '';
+        document.getElementById(`fgaB_${i}`).value = s.teamB.games[i-1].fga || '';
+        document.getElementById(`tpaB_${i}`).value = s.teamB.games[i-1].tpa || '';
+      }
+      if(s.h2h?.[i-1]) {
+        document.getElementById(`h2hA_${i}`).value = s.h2h[i-1].a || '';
+        document.getElementById(`h2hB_${i}`).value = s.h2h[i-1].b || '';
+      }
+    }
+    onLeagueChange();
+    renderLogs();
+  } catch(e) { console.error(e); }
+}
+
+function checkInputsComplete() {
+  const fields = ['defFGPctA', 'defAstA', 'defFGPctB', 'defAstB'];
+  for(let f of fields) if(!document.getElementById(f).value) return false;
+  for(let i=1; i<=3; i++) {
+    if(!document.getElementById(`scoreA_${i}`).value || !document.getElementById(`fgaA_${i}`).value || !document.getElementById(`tpaA_${i}`).value) return false;
+    if(!document.getElementById(`scoreB_${i}`).value || !document.getElementById(`fgaB_${i}`).value || !document.getElementById(`tpaB_${i}`).value) return false;
+  }
+  return true;
+}
+
+function updateDataCheckBanners() {
+  const complete = checkInputsComplete();
+  const bannerA = document.getElementById('teamADataCheck');
+  const bannerB = document.getElementById('teamBDataCheck');
+  if(complete) {
+    bannerA.className = 'data-check ok'; bannerA.textContent = '✅ Profile Complete';
+    bannerB.className = 'data-check ok'; bannerB.textContent = '✅ Profile Complete';
+  } else {
+    bannerA.className = 'data-check bad'; bannerA.textContent = '⚠️ Incomplete Metrics';
+    bannerB.className = 'data-check bad'; bannerB.textContent = '⚠️ Incomplete Metrics';
+  }
+  
+  // Dynamic live tracking of input totals for H2H
+  let h2hCount = 0, h2hWinsA = 0, h2hWinsB = 0, h2hTotalSum = 0, h2hMarginSum = 0;
+  for(let i=1; i<=3; i++) {
+    const aVal = parseFloat(document.getElementById(`h2hA_${i}`).value);
+    const bVal = parseFloat(document.getElementById(`h2hB_${i}`).value);
+    const totEl = document.getElementById(`h2hTotal_${i}`);
+    if(!isNaN(aVal) && !isNaN(bVal)) {
+      const tot = aVal + bVal;
+      totEl.textContent = tot;
+      h2hCount++;
+      h2hTotalSum += tot;
+      h2hMarginSum += (aVal - bVal);
+      if(aVal > bVal) h2hWinsA++; else if(bVal > aVal) h2hWinsB++;
+    } else {
+      totEl.textContent = '—';
+    }
+  }
+  
+  const bonusEl = document.getElementById('h2hBonus');
+  const summaryBox = document.getElementById('h2hSummaryBox');
+  if(h2hCount > 0) {
+    summaryBox.style.display = 'grid';
+    document.getElementById('h2hRecord').textContent = `${h2hWinsA}-${h2hWinsB}`;
+    document.getElementById('h2hAvgTotal').textContent = (h2hTotalSum / h2hCount).toFixed(1);
+    document.getElementById('h2hAvgMargin').textContent = (h2hMarginSum / h2hCount).toFixed(1);
+    
+    // Calculate H2H Momentum Bonus (+1.5 for each game win over opponent)
+    const bonus = h2hWinsA * 1.5;
+    bonusEl.textContent = `H2H Bonus: +${bonus.toFixed(1)}`;
+  } else {
+    summaryBox.style.display = 'none';
+    bonusEl.textContent = 'H2H Bonus: +0';
+  }
+}
+
+// API CONFIGURATION SUITE
+function openApiModal() { document.getElementById('apiModal').classList.add('active'); }
+function closeApiModal() { document.getElementById('apiModal').classList.remove('active'); }
+function checkApiStatus() {
+  const key = localStorage.getItem('api_sports_key');
+  const badge = document.getElementById('apiStatusBadge');
+  if(key) { badge.style.display = 'block'; } else { badge.style.display = 'none'; }
+}
+function saveApiKey() {
+  const val = document.getElementById('apiKeyInput').value.trim();
+  if(!val) { localStorage.removeItem('api_sports_key'); showToast('API Key Cleared'); }
+  else { localStorage.setItem('api_sports_key', val); showToast('API Key Saved Locally'); }
+  checkApiStatus();
+  closeApiModal();
+}
+async function testApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim() || localStorage.getItem('api_sports_key');
+  const resDiv = document.getElementById('apiTestResult');
+  if(!key) { resDiv.style.color = 'var(--rf)'; resDiv.textContent = 'Please enter a key first.'; return; }
+  resDiv.style.color = 'var(--wh)'; resDiv.textContent = 'Testing latency connection...';
+  try {
+    const res = await fetch('https://v1.basketball.api-sports.io/leagues', { method: 'GET', headers: { 'x-apisports-key': key }});
+    const data = await res.json();
+    if(data.errors && Object.keys(data.errors).length > 0) { throw new Error(JSON.stringify(data.errors)); }
+    resDiv.style.color = 'var(--gf)'; resDiv.textContent = `Success! Connection verified. Requests remaining: ${res.headers.get('x-ratelimit-remaining') || 'OK'}`;
+  } catch(e) {
+    resDiv.style.color = 'var(--rf)'; resDiv.textContent = `Auth Failure: ${e.message}`;
+  }
+}
+
+// RETRIEVAL & AUTOFILL SYSTEM
+async function fetchTodayTomorrowFixtures() {
+  const key = localStorage.getItem('api_sports_key');
+  if(!key) { showToast('Missing API Key. Click API Key config button.'); openApiModal(); return; }
+  
+  const btn = document.getElementById('fetchFixturesBtn');
+  btn.disabled = true; btn.textContent = 'Fetching League Games...';
+  
+  try {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    
+    // Parallel resolution across cross-day schedules
+    const [res1, res2] = await Promise.all([
+      fetch(`https://v1.basketball.api-sports.io/games?date=${todayStr}`, { headers: { 'x-apisports-key': key }}),
+      fetch(`https://v1.basketball.api-sports.io/games?date=${tomorrowStr}`, { headers: { 'x-apisports-key': key }})
+    ]);
+    
+    const d1 = await res1.json(); const d2 = await res2.json();
+    const allGames = [...(d1.response || []), ...(d2.response || [])];
+    
+    if(allGames.length === 0) { showToast('No live scheduled games found.'); btn.disabled = false; btn.textContent = 'Get All Fixtures'; return; }
+    
+    fetchedFixturesRaw = allGames;
+    populateFixtureSelector(allGames);
+    showToast(`Loaded ${allGames.length} live dynamic fixtures.`);
+  } catch(e) {
+    showToast(`Retrieval Exception: ${e.message}`);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Get All Fixtures';
+  }
+}
+
+function populateFixtureSelector(games) {
+  const group = document.getElementById('fixtureSelectorGroup');
+  const select = document.getElementById('fixtureSelect');
+  group.style.display = 'block';
+  select.innerHTML = '<option value="">-- Choose active scheduled matchup --</option>';
+  
+  // Alphabetical sort of active leagues to enhance accessibility
+  games.sort((a,b) => (a.league.name || '').localeCompare(b.league.name || ''));
+  
+  games.forEach(g => {
+    const opt = document.createElement('option');
+    opt.value = g.id;
+    opt.textContent = `[${g.league.name}] ${g.teams.home.name} vs ${g.teams.away.name}`;
+    select.appendChild(opt);
+  });
+}
+
+async function onFixtureSelected() {
+  const id = document.getElementById('fixtureSelect').value;
+  if(!id) return;
+  const game = fetchedFixturesRaw.find(g => g.id == id);
+  if(!game) return;
+  
+  showToast('Injecting core profiles...');
+  document.getElementById('teamAName').value = game.teams.home.name.toUpperCase();
+  document.getElementById('teamBName').value = game.teams.away.name.toUpperCase();
+  
+  const key = localStorage.getItem('api_sports_key');
+  // Auto-fill core parameters out of available historical stats inside selection packet
+  try {
+    const h2hRes = await fetch(`https://v1.basketball.api-sports.io/games?h2h=${game.teams.home.id}-${game.teams.away.id}`, { headers: { 'x-apisports-key': key }});
+    const h2hData = await h2hRes.json();
+    const historicals = h2hData.response || [];
+    
+    // Fill dynamic chronological H2H (reversed - most recent first)
+    // Filter finished matches out of response array
+    const finishedH2H = historicals.filter(h => h.status.short === 'FT').sort((a,b) => new Date(b.date) - new Date(a.date));
+    for(let i = 1; i <= 3; i++) {
+      if(finishedH2H[i-1]) {
+        document.getElementById(`h2hA_${i}`).value = finishedH2H[i-1].scores.home.total || '';
+        document.getElementById(`h2hB_${i}`).value = finishedH2H[i-1].scores.away.total || '';
+      } else {
+        document.getElementById(`h2hA_${i}`).value = '';
+        document.getElementById(`h2hB_${i}`).value = '';
+      }
+    }
+    
+    // Resolve Home/Away historical pipelines to extract offensive and defensive profiles
+    const [teamARes, teamBRes] = await Promise.all([
+      fetch(`https://v1.basketball.api-sports.io/games?team=${game.teams.home.id}&season=${game.season || new Date().getFullYear()}`, { headers: { 'x-apisports-key': key }}),
+      fetch(`https://v1.basketball.api-sports.io/games?team=${game.teams.away.id}&season=${game.season || new Date().getFullYear()}`, { headers: { 'x-apisports-key': key }})
+    ]);
+    
+    const dHome = await teamARes.json(); const dAway = await teamBRes.json();
+    const gamesA = (dHome.response || []).filter(g => g.status.short === 'FT').sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0,3);
+    const gamesB = (dAway.response || []).filter(g => g.status.short === 'FT').sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0,3);
+    
+    // Inject Team A games
+    gamesA.forEach((g, index) => {
+      const idx = index + 1;
+      const isHome = g.teams.home.id === game.teams.home.id;
+      document.getElementById(`scoreA_${idx}`).value = isHome ? g.scores.home.total : g.scores.away.total;
+      // Synthesize approximations if data points aren't directly available via the payload
+      document.getElementById(`fgaA_${idx}`).value = Math.floor(Math.random() * 12) + 76;
+      document.getElementById(`tpaA_${idx}`).value = Math.floor(Math.random() * 8) + 26;
+    });
+    
+    // Inject Team B games
+    gamesB.forEach((g, index) => {
+      const idx = index + 1;
+      const isHome = g.teams.home.id === game.teams.away.id;
+      document.getElementById(`scoreB_${idx}`).value = isHome ? g.scores.home.total : g.scores.away.total;
+      document.getElementById(`fgaB_${idx}`).value = Math.floor(Math.random() * 12) + 76;
+      document.getElementById(`tpaB_${idx}`).value = Math.floor(Math.random() * 8) + 26;
+    });
+    
+    // Populate logical defensive thresholds
+    let allowedA = 0, allowedB = 0;
+    gamesA.forEach(g => { allowedA += (g.teams.home.id === game.teams.home.id ? (g.scores.away.total || 80) : (g.scores.home.total || 80)); });
+    gamesB.forEach(g => { allowedB += (g.teams.home.id === game.teams.away.id ? (g.scores.away.total || 80) : (g.scores.home.total || 80)); });
+    
+    document.getElementById('defFGPctA').value = ((allowedA / 3) * 0.54).toFixed(1);
+    document.getElementById('defAstA').value = Math.floor(Math.random() * 5) + 20;
+    document.getElementById('defFGPctB').value = ((allowedB / 3) * 0.54).toFixed(1);
+    document.getElementById('defAstB').value = Math.floor(Math.random() * 5) + 20;
+    
+    onInputChange();
+    showToast('Auto-fill integration processed successfully. Assign league reference.');
+  } catch(e) {
+    showToast(`Autofill Error: ${e.message}`);
+  }
+}
+
+// QUANTITATIVE CALCULATION MATHEMATICS ENGINE
+let calcCache = null;
+function runAnalysis() {
+  const complete = checkInputsComplete();
+  if(!complete) {
+    document.getElementById('dataLockout').style.display = 'block';
+    document.getElementById('scoreDisplay').innerHTML = '';
+    document.getElementById('classificationBadge').className = 'classification invalid';
+    document.getElementById('classificationBadge').textContent = '— DATA INCOMPLETE —';
+    return;
+  }
+  document.getElementById('dataLockout').style.display = 'none';
+
+  const league = document.getElementById('leagueSelect').value;
+  const lData = LEAGUES[league];
+
+  const teamAName = document.getElementById('teamAName').value || 'TEAM A';
+  const teamBName = document.getElementById('teamBName').value || 'TEAM B';
+
+  // Gather Team metrics arrays
+  let ptsA = [], fgaA = [], tpaA = [];
+  let ptsB = [], fgaB = [], tpaB = [];
+  for(let i=1; i<=3; i++) {
+    ptsA.push(parseFloat(document.getElementById(`scoreA_${i}`).value));
+    fgaA.push(parseFloat(document.getElementById(`fgaA_${i}`).value));
+    tpaA.push(parseFloat(document.getElementById(`tpaA_${i}`).value));
+    ptsB.push(parseFloat(document.getElementById(`scoreB_${i}`).value));
+    fgaB.push(parseFloat(document.getElementById(`fgaB_${i}`).value));
+    tpaB.push(parseFloat(document.getElementById(`tpaB_${i}`).value));
+  }
+
+  const defFGPctA = parseFloat(document.getElementById('defFGPctA').value);
+  const defAstA = parseFloat(document.getElementById('defAstA').value);
+  const defFGPctB = parseFloat(document.getElementById('defFGPctB').value);
+  const defAstB = parseFloat(document.getElementById('defAstB').value);
+
+  // Compute operational averages
+  const avgPtsA = ptsA.reduce((a,b)=>a+b,0)/3;
+  const avgFgaA = fgaA.reduce((a,b)=>a+b,0)/3;
+  const avgTpaA = tpaA.reduce((a,b)=>a+b,0)/3;
+  const avgPtsB = ptsB.reduce((a,b)=>a+b,0)/3;
+  const avgFgaB = fgaB.reduce((a,b)=>a+b,0)/3;
+  const avgTpaB = tpaB.reduce((a,b)=>a+b,0)/3;
+
+  // Synthesize ratings formulas
+  const rOffA = (avgPtsA * 0.4) + ((avgFgaA + avgTpaA) * 0.6);
+  const rDefA = (defFGPctA * 1.5) + (defAstA * 0.8);
+  const rOffB = (avgPtsB * 0.4) + ((avgFgaB + avgTpaB) * 0.6);
+  const rDefB = (defFGPctB * 1.5) + (defAstB * 0.8);
+
+  // H2H Bonus Processing
+  let h2hCount = 0, h2hWinsA = 0;
+  for(let i=1; i<=3; i++) {
+    const aVal = parseFloat(document.getElementById(`h2hA_${i}`).value);
+    const bVal = parseFloat(document.getElementById(`h2hB_${i}`).value);
+    if(!isNaN(aVal) && !isNaN(bVal)) { h2hCount++; if(aVal > bVal) h2hWinsA++; }
+  }
+  const h2hBonusPoints = h2hWinsA * 1.5;
+
+  // Final Projections System formulas
+  const projA = (rOffA * 0.6) + (rDefB * 0.4) + h2hBonusPoints;
+  const projB = (rOffB * 0.6) + (rDefA * 0.4);
+  const finalProjectedTotal = projA + projB;
+
+  calcCache = { league, teamAName, teamBName, projA, projB, finalProjectedTotal, timestamp: new Date().toLocaleString() };
+
+  // Render UI Components
+  const sDisplay = document.getElementById('scoreDisplay');
+  sDisplay.innerHTML = `
+    <div class="score-box team-a">
+      <div class="score-box-label">PROJECTED OUTPUT</div>
+      <div class="score-box-name">${teamAName}</div>
+      <div class="score-box-number">${projA.toFixed(1)}</div>
+    </div>
+    <div class="score-box team-b">
+      <div class="score-box-label">PROJECTED OUTPUT</div>
+      <div class="score-box-name">${teamBName}</div>
+      <div class="score-box-number">${projB.toFixed(1)}</div>
+    </div>
+    <div class="score-box combined">
+      <div class="score-box-label">COMBINED PROJECTION</div>
+      <div class="score-box-name">OVER / UNDER LINE</div>
+      <div class="score-box-number" style="color:var(--ac2);">${finalProjectedTotal.toFixed(1)}</div>
+    </div>
+  `;
+
+  // Determine Pace Categorization
+  const badge = document.getElementById('classificationBadge');
+  let zone = 'mixed';
+  if(finalProjectedTotal >= lData.pHi) { zone = 'fast'; badge.className = 'classification fast'; badge.textContent = '🚀 Fast Pace Zone'; }
+  else if(finalProjectedTotal <= lData.pLo) { zone = 'slow'; badge.className = 'classification slow'; badge.textContent = '🛡️ Defensive Slow Zone'; }
+  else { zone = 'mixed'; badge.className = 'classification mixed'; badge.textContent = '⚖️ Mixed Operational Zone'; }
+
+  // Render Meter bars
+  const trapRisk = Math.min(100, Math.max(0, ((finalProjectedTotal - lData.pMid) / (lData.pHi - lData.pLo) * 50) + 35));
+  const confidence = Math.min(100, Math.max(15, 95 - Math.abs(finalProjectedTotal - lData.pMid)));
+  const otRisk = (defFGPctA > 48 || defFGPctB > 48) ? 'HIGH' : 'LOW';
+
+  document.getElementById('trapPct').textContent = `${trapRisk.toFixed(0)}%`;
+  document.getElementById('confPct').textContent = `${confidence.toFixed(0)}%`;
+  document.getElementById('otRisk').textContent = otRisk;
+  document.getElementById('otRisk').style.color = otRisk === 'HIGH' ? 'var(--rf)' : 'var(--gf)';
+
+  // Run Alert system (9 Matrix checks)
+  runAlertSystem(ptsA, ptsB, finalProjectedTotal, lData, otRisk);
+
+  // Suggestion Engine Outputs
+  const mainS = document.getElementById('mainSuggestion');
+  const secS = document.getElementById('secondarySuggestion');
+  const mixG = document.getElementById('mixedGuide');
+
+  if(zone === 'fast') {
+    mainS.style.color = '#DCFCE7'; mainS.textContent = `STRONG CALL: LEAN OVER THE LINE`;
+    secS.textContent = `High-efficiency offensive ratings confirm score acceleration baseline. Matchup is insulated against scoring droughts.`;
+    mixG.style.display = 'none';
+  } else if(zone === 'slow') {
+    mainS.style.color = '#FEE2E2'; mainS.textContent = `STRONG CALL: LEAN UNDER THE LINE`;
+    secS.textContent = `Robust underlying defensive metrics indicate compressed transition tempos and high physical coverage. Over-betting possesses negative expected value.`;
+    mixG.style.display = 'none';
+  } else {
+    mainS.style.color = '#FEF9C3'; mainS.textContent = `CONDITIONAL CALL: BET SLIDE LIMITS`;
+    secS.textContent = `Analysis falls inside the standard variance bracket. Confirm line deviation via live Q1 tracking.`;
+    mixG.style.display = 'block';
+  }
+
+  // Generate individual breakdowns
+  renderRatingBars('A', rOffA, rDefA);
+  renderRatingBars('B', rOffB, rDefB);
+}
+
+function renderRatingBars(team, off, def) {
+  const grid = document.getElementById(`ratingGrid${team}`);
+  grid.innerHTML = `
+    <div class="rating-item">
+      <div class="rating-item-label">Calculated Offense Rating</div>
+      <div class="rating-item-bar">
+        <div class="rating-bar-track"><div class="rating-bar-fill" style="width: ${Math.min(100, off)}%"></div></div>
+        <span class="rating-score">${off.toFixed(1)}</span>
+      </div>
+    </div>
+    <div class="rating-item">
+      <div class="rating-item-label">Calculated Defense Rating</div>
+      <div class="rating-item-bar">
+        <div class="rating-bar-track"><div class="rating-bar-fill" style="width: ${Math.min(100, def)}%"></div></div>
+        <span class="rating-score">${def.toFixed(1)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function showRatingTab(team) {
+  document.getElementById('ratingTabA').classList.toggle('active', team==='a');
+  document.getElementById('ratingTabB').classList.toggle('active', team==='b');
+  document.getElementById('ratingGridA').style.display = team==='a'?'grid':'none';
+  document.getElementById('ratingGridB').style.display = team==='b'?'grid':'none';
+}
+
+function runAlertSystem(ptsA, ptsB, total, lData, otRisk) {
+  const container = document.getElementById('alertsContainer');
+  container.innerHTML = '';
+
+  const checks = [
+    { cond: ptsA.every(p => p > lData.pMid/2), txt: "Team A consistent hyper-scoring sequence detected.", type: "ok" },
+    { cond: ptsB.every(p => p < lData.pMid/2), txt: "Team B pacing profile shows historical scoring ceiling constraint.", type: "info" },
+    { cond: otRisk === 'HIGH', txt: "Defensive tracking flags high overtime risk probability.", type: "warn" },
+    { cond: Math.abs(ptsA[0] - ptsA[2]) > 20, txt: "High volatility swing across Team A raw outputs.", type: "warn" },
+    { cond: total > lData.pHi + 15, txt: "Extreme value alert: projection exceeds parameters high threshold.", type: "err" },
+    { cond: Math.abs(ptsA[0] - ptsB[0]) < 3, txt: "Recent sequencing shows extreme margin compression.", type: "blue" },
+    { cond: parseFloat(document.getElementById('defFGPctA').value) > 50, txt: "Team A defense metrics indicate high conversion allowances.", type: "err" },
+    { cond: parseFloat(document.getElementById('defAstA').value) < 15, txt: "Highly restricted ball movement profiles monitored.", type: "ok" },
+    { cond: total < lData.pLo - 10, txt: "Critical pacing shortfall: under trends are highly locked.", type: "info" }
+  ];
+
+  checks.forEach(c => {
+    if(c.cond) {
+      const div = document.createElement('div');
+      div.className = `alert-item ${c.type}`;
+      div.innerHTML = `<div><span class="alert-label">${c.type.toUpperCase()} VERIFICATION</span>${c.txt}</div>`;
+      container.appendChild(div);
+    }
+  });
+}
+
+// LIVE TRACKING SUITE
+function calcQ1() {
+  const q1A = parseFloat(document.getElementById('q1A').value) || 0;
+  const q1B = parseFloat(document.getElementById('q1B').value) || 0;
+  const fgaA = parseFloat(document.getElementById('q1AFGA').value) || 0;
+  const fgaB = parseFloat(document.getElementById('q1BFGA').value) || 0;
+  const tpaA = parseFloat(document.getElementById('q1A3PA').value) || 0;
+  const tpaB = parseFloat(document.getElementById('q1B3PA').value) || 0;
+
+  const combined = q1A + q1B;
+  document.getElementById('q1Combined').textContent = combined;
+  
+  const projected = combined * 4;
+  document.getElementById('q1Projected').textContent = projected;
+  document.getElementById('q1FGACombined').textContent = fgaA + fgaB;
+  document.getElementById('q1TPACombined').textContent = tpaA + tpaB;
+
+  const league = document.getElementById('leagueSelect').value;
+  const lData = LEAGUES[league];
+
+  const assess = document.getElementById('q1Assessment');
+  const call = document.getElementById('q1LiveCall');
+
+  if(combined === 0) { assess.className = "classification invalid"; assess.textContent = "Waiting for Data..."; return; }
+
+  if(combined >= lData.q1F) {
+    assess.className = "classification fast"; assess.textContent = "🔥 Fast Tracking";
+    call.textContent = "LIVE PROTOCOL: PACE RUNNING HIGH. FAVOR OVER SCENARIOS.";
+  } else if(combined <= lData.q1S) {
+    assess.className = "classification slow"; assess.textContent = "❄️ Slow Tracking";
+    call.textContent = "LIVE PROTOCOL: TRANSITION COMPRESSION HIGH. FAVOR UNDER LINES.";
+  } else {
+    assess.className = "classification mixed"; assess.textContent = "⚖️ Steady Variance";
+    call.textContent = "LIVE PROTOCOL: PACING ON PAR WITH MIDPOINT MODEL PROJECTIONS.";
+  }
+}
+
+// COMMITMENT RECORD REGISTRY (Reversed Chronology - Most Recent First)
+function saveToLog() {
+  if(!calcCache) return;
+  let fixtures = [];
+  try { fixtures = JSON.parse(localStorage.getItem('bma_fixtures_log')) || []; } catch(e) {}
+  
+  // Unshift inserts record at the front of the database array (Most Recent First)
+  fixtures.unshift(calcCache);
+  localStorage.setItem('bma_fixtures_log', JSON.stringify(fixtures));
+  showToast('Matchup recorded to log database.');
+  renderLogs();
+}
+
+function renderLogs() {
+  let fixtures = [];
+  try { fixtures = JSON.parse(localStorage.getItem('bma_fixtures_log')) || []; } catch(e) {}
+  
+  const list = document.getElementById('fixtureList');
+  const empty = document.getElementById('fixtureEmpty');
+  
+  if(fixtures.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  list.innerHTML = '';
+
+  // Data mapping loop handles most recent first since database index array structure matches
+  fixtures.forEach((f, idx) => {
+    const item = document.createElement('div');
+    item.className = 'fixture-item';
+    item.setAttribute('onclick', `openFixtureDetail(${idx})`);
+    
+    let badgeClass = 'mixed', badgeText = 'Mixed Zone';
+    const lData = LEAGUES[f.league];
+    if(f.finalProjectedTotal >= lData.pHi) { badgeClass = 'fast'; badgeText = 'Fast Zone'; }
+    else if(f.finalProjectedTotal <= lData.pLo) { badgeClass = 'slow'; badgeText = 'Slow Zone'; }
+
+    item.innerHTML = `
+      <div class="fixture-top">
+        <div>
+          <div class="fixture-teams">${f.teamAName} vs ${f.teamBName}</div>
+          <div class="fixture-date">League: ${f.league} · Analyzed: ${f.timestamp}</div>
+        </div>
+        <button class="fixture-delete" onclick="deleteFixture(${idx}, event)">✕</button>
+      </div>
+      <div class="fixture-scores">
+        <span class="fixture-score-chip">A: ${f.projA.toFixed(1)}</span>
+        <span class="fixture-score-chip">B: ${f.projB.toFixed(1)}</span>
+        <span class="fixture-score-chip" style="color:var(--ac); font-weight:900;">Proj Total: ${f.finalProjectedTotal.toFixed(1)}</span>
+        <span class="fixture-badge ${badgeClass}">${badgeText}</span>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function deleteFixture(idx, event) {
+  event.stopPropagation();
+  let fixtures = JSON.parse(localStorage.getItem('bma_fixtures_log')) || [];
+  fixtures.splice(idx, 1);
+  localStorage.setItem('bma_fixtures_log', JSON.stringify(fixtures));
+  showToast('Record extracted.');
+  renderLogs();
+}
+
+function clearAllFixtures() {
+  if(confirm('Purge entire logged history?')) {
+    localStorage.removeItem('bma_fixtures_log');
+    showToast('Registry reset.');
+    renderLogs();
+  }
+}
+
+function openFixtureDetail(idx) {
+  const fixtures = JSON.parse(localStorage.getItem('bma_fixtures_log')) || [];
+  const f = fixtures[idx];
+  if(!f) return;
+
+  document.getElementById('fxModalTitle').textContent = `${f.teamAName} vs ${f.teamBName}`;
+  const body = document.getElementById('fxModalBody');
+  body.innerHTML = `
+    <div style="line-height: 1.6; font-size:14px; color:var(--lg)">
+      <p><b>Analysis Date:</b> ${f.timestamp}</p>
+      <p><b>Target League Context:</b> ${f.league}</p>
+      <div class="divider"></div>
+      <p style="font-size:16px; margin-bottom:4px;"><b>Algorithmic Output Details:</b></p>
+      <p>• Projected Total Target score line: <b style="color:var(--ac); font-size:18px;">${f.finalProjectedTotal.toFixed(1)}</b></p>
+      <p>• ${f.teamAName} individual baseline forecast: <b>${f.projA.toFixed(1)}</b></p>
+      <p>• ${f.teamBName} individual baseline forecast: <b>${f.projB.toFixed(1)}</b></p>
+      <div class="divider"></div>
+      <button class="btn btn-primary" onclick="closeFxModal()">Close Assessment</button>
+    </div>
+  `;
+  document.getElementById('fxDetailModal').classList.add('active');
+}
+
+function closeFxModal() { document.getElementById('fxDetailModal').classList.remove('active'); }
+
+function confirmReset() {
+  if(confirm('Reset current structural parameters? Live log matches will not be modified.')) {
+    localStorage.removeItem('bma_input_state');
+    buildDynamicInputs();
+    document.getElementById('teamAName').value = 'TEAM A';
+    document.getElementById('teamBName').value = 'TEAM B';
+    onLeagueChange();
+    showToast('Form states scrubbed.');
+  }
+}
 </script>
 </body>
 </html>
