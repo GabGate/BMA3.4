@@ -12,7 +12,6 @@
 <title>🏀 Basketball Analyzer v3.4</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ========== COMPLETE STYLES FROM YOUR v3.2 (PRESERVED) ========== */
 :root {
   --dn: #0D1B2A;
   --nv: #1A2940;
@@ -182,10 +181,6 @@ body {
   transition: border-color .2s;
 }
 .input-field:focus { outline: none; border-color: var(--mb); background: #DBEAFE; }
-.input-field.calc {
-  background: var(--cb); border-color: var(--gf);
-  color: var(--gd);
-}
 .input-field.pct { color: var(--rd); }
 
 .total-pts-display {
@@ -205,177 +200,6 @@ body {
 .data-check.ok { background: var(--gc); color: var(--gd); border: 1.5px solid var(--gf); }
 .data-check.bad { background: var(--rc); color: var(--rd); border: 1.5px solid var(--rf); }
 
-.rating-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.rating-item {
-  background: var(--dn); border-radius: 8px;
-  padding: 10px; border: 1px solid #253A55;
-}
-.rating-item-label {
-  font-size: 10px; font-weight: 600; color: var(--mg);
-  text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px;
-}
-.rating-item-bar {
-  display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
-}
-.rating-bar-track {
-  flex: 1; height: 6px; background: #1E3A5F; border-radius: 3px; overflow: hidden;
-}
-.rating-bar-fill {
-  height: 100%; border-radius: 3px;
-  background: linear-gradient(90deg, var(--mb), var(--ac));
-  transition: width .4s ease;
-}
-.rating-score {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 20px; font-weight: 900; color: var(--ac);
-}
-.rating-max { font-size: 11px; color: var(--mg); }
-
-.score-display {
-  display: flex; gap: 8px; margin-bottom: 12px;
-}
-.score-box {
-  flex: 1; border-radius: 10px; padding: 14px 10px;
-  text-align: center; border: 2px solid transparent;
-}
-.score-box.team-a { background: linear-gradient(135deg, var(--bl), #2A4A70); border-color: var(--ac); }
-.score-box.team-b { background: linear-gradient(135deg, var(--mb), #3B72C4); border-color: var(--lb); }
-.score-box.combined { background: linear-gradient(135deg, #0F2337, #1A3050); border-color: var(--ac); }
-.score-box-label {
-  font-size: 10px; font-weight: 600; color: var(--mg);
-  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px;
-}
-.score-box-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 800; color: var(--wh);
-  margin-bottom: 6px; white-space: nowrap; overflow: hidden;
-  text-overflow: ellipsis;
-}
-.score-box-number {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 36px; font-weight: 900; line-height: 1;
-  color: var(--ac);
-}
-.score-box-denom { font-size: 13px; color: var(--mg); }
-
-.classification {
-  border-radius: 10px; padding: 14px;
-  text-align: center; margin-bottom: 12px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 22px; font-weight: 900;
-  letter-spacing: 1px; text-transform: uppercase;
-  border: 2px solid transparent;
-}
-.classification.fast { background: linear-gradient(135deg, #14532D, #166534); border-color: #16A34A; color: #DCFCE7; }
-.classification.mixed { background: linear-gradient(135deg, #78350F, #92400E); border-color: #D97706; color: #FEF9C3; }
-.classification.slow { background: linear-gradient(135deg, #7F1D1D, #991B1B); border-color: #DC2626; color: #FEE2E2; }
-.classification.invalid { background: linear-gradient(135deg, #1E293B, #334155); border-color: #475569; color: #94A3B8; }
-
-.alert-item {
-  border-radius: 8px; padding: 10px 12px;
-  margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px;
-  font-size: 12px; font-weight: 500; line-height: 1.4;
-}
-.alert-item.warn { background: var(--yc); color: var(--yd); border: 1.5px solid var(--yf); }
-.alert-item.ok   { background: var(--gc); color: var(--gd); border: 1.5px solid var(--gf); }
-.alert-item.err  { background: var(--rc); color: var(--rd); border: 1.5px solid var(--rf); }
-.alert-item.info { background: var(--pc); color: var(--pu); border: 1.5px solid #8B5CF6; }
-.alert-item.blue { background: #DBEAFE; color: var(--bl); border: 1.5px solid var(--mb); }
-.alert-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: .5px;
-  display: block; margin-bottom: 2px; opacity: .7;
-}
-
-.suggestion-main {
-  border-radius: 10px; padding: 16px;
-  margin-bottom: 8px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px; font-weight: 800;
-  line-height: 1.3; border: 2px solid var(--ac);
-  background: linear-gradient(135deg, #1A2F1A, #0F2337);
-}
-.suggestion-secondary {
-  border-radius: 8px; padding: 12px;
-  margin-bottom: 8px;
-  font-size: 13px; font-weight: 500;
-  background: var(--nv); border: 1px solid #253A55;
-  color: var(--lg);
-}
-
-.meter-row {
-  display: flex; gap: 8px; margin-bottom: 12px;
-}
-.meter-box {
-  flex: 1; background: var(--dn); border-radius: 10px;
-  padding: 12px; text-align: center;
-  border: 1.5px solid #253A55;
-}
-.meter-label {
-  font-size: 10px; font-weight: 600; color: var(--mg);
-  text-transform: uppercase; letter-spacing: .3px; margin-bottom: 6px;
-}
-.meter-value {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 28px; font-weight: 900;
-}
-.meter-value.trap { color: var(--yf); }
-.meter-value.conf { color: var(--gf); }
-.meter-value.danger { color: var(--rf); }
-
-.q1-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-.q1-result {
-  border-radius: 8px; padding: 12px;
-  background: var(--dn); border: 1px solid #253A55;
-  text-align: center;
-}
-.q1-result-label { font-size: 10px; color: var(--mg); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; }
-.q1-result-val {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 24px; font-weight: 900; color: var(--ac);
-}
-
-.fixture-item {
-  border-radius: 10px; padding: 12px;
-  margin-bottom: 8px;
-  background: var(--nv); border: 1px solid #253A55;
-  cursor: pointer;
-  transition: border-color .15s;
-}
-.fixture-item:active { transform: scale(.99); border-color: var(--ac) !important; }
-.fixture-top {
-  display: flex; justify-content: space-between;
-  align-items: flex-start; margin-bottom: 8px;
-}
-.fixture-teams {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; font-weight: 800; color: var(--wh);
-}
-.fixture-date { font-size: 11px; color: var(--mg); }
-.fixture-scores { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.fixture-score-chip {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 700;
-  padding: 3px 8px; border-radius: 6px;
-  background: var(--dn); color: var(--mg);
-}
-.fixture-badge {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 800;
-  padding: 4px 10px; border-radius: 6px;
-  text-transform: uppercase;
-}
-.fixture-badge.fast { background: var(--gc); color: var(--gd); }
-.fixture-badge.mixed { background: var(--yc); color: var(--yd); }
-.fixture-badge.slow { background: var(--rc); color: var(--rd); }
-.fixture-delete {
-  background: none; border: none; color: var(--mg);
-  font-size: 18px; cursor: pointer; padding: 4px;
-  line-height: 1;
-}
-.fixture-tap-hint { font-size: 10px; color: var(--lb); margin-top: 5px; font-style: italic; }
-
 .btn {
   width: 100%; padding: 14px;
   border: none; border-radius: 10px;
@@ -385,23 +209,9 @@ body {
   cursor: pointer; transition: transform .1s, opacity .2s;
 }
 .btn:active { transform: scale(0.98); opacity: .9; }
-.btn-primary { background: linear-gradient(135deg, var(--mb), var(--lb)); color: var(--wh); }
 .btn-accent  { background: linear-gradient(135deg, var(--ac), var(--ac2)); color: var(--dn); }
-.btn-danger  { background: linear-gradient(135deg, var(--rd), var(--rf)); color: var(--wh); }
 .btn-ghost   { background: transparent; border: 2px solid var(--mg); color: var(--mg); }
 .btn-api     { background: linear-gradient(135deg, #059669, #10B981); color: var(--wh); }
-
-.tab-row { display: flex; gap: 6px; margin-bottom: 10px; }
-.tab-btn {
-  flex: 1; padding: 8px 4px;
-  background: var(--nv); border: 1.5px solid #253A55;
-  border-radius: 8px; color: var(--mg);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 700;
-  cursor: pointer; transition: all .2s;
-  text-transform: uppercase; letter-spacing: .5px;
-}
-.tab-btn.active { background: var(--mb); border-color: var(--mb); color: var(--wh); }
 
 .section-title {
   font-family: 'Barlow Condensed', sans-serif;
@@ -413,12 +223,6 @@ body {
 .section-title::after {
   content: ''; flex: 1; height: 1px; background: #1E3A5F;
 }
-.empty-state {
-  text-align: center; padding: 32px 16px;
-  color: var(--mg);
-}
-.empty-icon { font-size: 40px; margin-bottom: 12px; }
-.empty-text { font-size: 14px; font-weight: 500; }
 
 .divider { height: 1px; background: #1E3A5F; margin: 12px 0; }
 .small-note {
@@ -447,13 +251,11 @@ body {
   background: linear-gradient(135deg, var(--nv) 0%, #16243A 100%);
   border: 1px solid #253A55; border-radius: 14px;
   max-width: 520px; margin: 0 auto; overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,.6);
 }
 .modal-header {
   background: linear-gradient(135deg, var(--bl) 0%, var(--mb) 100%);
   padding: 13px 16px;
   display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid #253A55;
 }
 .modal-header-title {
   font-family: 'Barlow Condensed', sans-serif;
@@ -493,7 +295,6 @@ body {
   font-size: 18px; font-weight: 800;
   text-align: center;
 }
-.h2h-score-input:focus { outline: none; border-color: var(--mb); background: #DBEAFE; }
 .h2h-score-input.winner { border-color: var(--gf); background: var(--gc); color: var(--gd); }
 .h2h-score-input.loser  { border-color: #CBD5E1; background: #F8FAFC; color: #94A3B8; }
 .h2h-vs-badge {
@@ -501,13 +302,13 @@ body {
   font-size: 11px; font-weight: 800;
   color: var(--mg); text-align: center;
   background: rgba(0,0,0,.1); border-radius: 4px;
-  padding: 4px 6px; white-space: nowrap;
+  padding: 4px 6px;
 }
 .h2h-total-badge {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 13px; font-weight: 800;
   padding: 8px 10px; border-radius: 7px;
-  text-align: center; white-space: nowrap;
+  text-align: center;
   background: var(--cb); color: var(--gd);
   border: 1.5px solid var(--gf);
   min-width: 62px;
@@ -530,23 +331,7 @@ body {
 }
 .h2h-sum-lbl {
   font-size: 9px; font-weight: 600;
-  color: var(--mg); text-transform: uppercase; letter-spacing: .5px;
-}
-.h2h-trend-row {
-  margin-top: 6px;
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--mg);
-}
-.h2h-trend-pill {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 800;
-  padding: 4px 10px; border-radius: 20px;
-}
-.h2h-game-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 700;
   color: var(--mg); text-transform: uppercase;
-  letter-spacing: .5px; margin-bottom: 4px;
 }
 .league-range-chip {
   background: var(--ib); color: var(--mb);
@@ -556,7 +341,6 @@ body {
   border: 1.5px solid var(--lb);
   display: inline-block; margin-top: 6px;
 }
-.btn-row-split { display: flex; gap: 8px; margin-bottom: 8px; }
 .loading-spinner {
   display: inline-block;
   width: 16px;
@@ -569,22 +353,119 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 .btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.pred-date-banner {
-  text-align: center; margin-bottom: 14px;
-  padding: 14px; background: linear-gradient(135deg, #0D1B2A, #1A2940);
-  border: 1px solid #253A55; border-radius: 12px;
-}
-.pred-date-title {
+.fixture-select {
+  width: 100%; padding: 10px 12px;
+  background: var(--ib); border: 2px solid var(--mb);
+  border-radius: 8px; color: var(--bl);
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 26px; font-weight: 900; letter-spacing: 2px; color: var(--ac);
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 10px;
 }
-.pred-date-sub { font-size: 11px; color: var(--mg); margin-top: 2px; }
+.fixture-select option { color: var(--bl); }
 
-@media print {
-  .topbar, .bottom-nav, .no-print, .toast, .modal-overlay { display: none !important; }
-  body { background: #fff !important; color: #000 !important; padding: 0 !important; }
-  #print-area { display: block !important; }
+.score-display { display: flex; gap: 8px; margin-bottom: 12px; }
+.score-box {
+  flex: 1; border-radius: 10px; padding: 14px 10px;
+  text-align: center; border: 2px solid transparent;
 }
+.score-box.team-a { background: linear-gradient(135deg, var(--bl), #2A4A70); border-color: var(--ac); }
+.score-box.team-b { background: linear-gradient(135deg, var(--mb), #3B72C4); border-color: var(--lb); }
+.score-box.combined { background: linear-gradient(135deg, #0F2337, #1A3050); border-color: var(--ac); }
+.score-box-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; margin-bottom: 4px; }
+.score-box-name { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
+.score-box-number { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; line-height: 1; color: var(--ac); }
+.score-box-denom { font-size: 13px; color: var(--mg); }
+
+.classification {
+  border-radius: 10px; padding: 14px;
+  text-align: center; margin-bottom: 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 900;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+}
+.classification.fast { background: linear-gradient(135deg, #14532D, #166534); border-color: #16A34A; color: #DCFCE7; }
+.classification.mixed { background: linear-gradient(135deg, #78350F, #92400E); border-color: #D97706; color: #FEF9C3; }
+.classification.slow { background: linear-gradient(135deg, #7F1D1D, #991B1B); border-color: #DC2626; color: #FEE2E2; }
+.classification.invalid { background: linear-gradient(135deg, #1E293B, #334155); border-color: #475569; color: #94A3B8; }
+
+.rating-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rating-item {
+  background: var(--dn); border-radius: 8px;
+  padding: 10px; border: 1px solid #253A55;
+}
+.rating-item-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; margin-bottom: 4px; }
+.rating-item-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.rating-bar-track { flex: 1; height: 6px; background: #1E3A5F; border-radius: 3px; overflow: hidden; }
+.rating-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--mb), var(--ac)); }
+.rating-score { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: var(--ac); }
+.rating-max { font-size: 11px; color: var(--mg); }
+
+.alert-item {
+  border-radius: 8px; padding: 10px 12px;
+  margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12px; font-weight: 500; line-height: 1.4;
+}
+.alert-item.warn { background: var(--yc); color: var(--yd); border: 1.5px solid var(--yf); }
+.alert-item.ok   { background: var(--gc); color: var(--gd); border: 1.5px solid var(--gf); }
+.alert-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .5px;
+  display: block; margin-bottom: 2px; opacity: .7;
+}
+
+.suggestion-main {
+  border-radius: 10px; padding: 16px;
+  margin-bottom: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 800;
+  line-height: 1.3; border: 2px solid var(--ac);
+  background: linear-gradient(135deg, #1A2F1A, #0F2337);
+}
+.suggestion-secondary {
+  border-radius: 8px; padding: 12px;
+  margin-bottom: 8px;
+  font-size: 13px; font-weight: 500;
+  background: var(--nv); border: 1px solid #253A55;
+  color: var(--lg);
+}
+
+.meter-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.meter-box { flex: 1; background: var(--dn); border-radius: 10px; padding: 12px; text-align: center; border: 1.5px solid #253A55; }
+.meter-label { font-size: 10px; font-weight: 600; color: var(--mg); text-transform: uppercase; margin-bottom: 6px; }
+.meter-value { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; }
+.meter-value.trap { color: var(--yf); }
+.meter-value.conf { color: var(--gf); }
+
+.tab-row { display: flex; gap: 6px; margin-bottom: 10px; }
+.tab-btn {
+  flex: 1; padding: 8px 4px;
+  background: var(--nv); border: 1.5px solid #253A55;
+  border-radius: 8px; color: var(--mg);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer;
+}
+.tab-btn.active { background: var(--mb); border-color: var(--mb); color: var(--wh); }
+
+.fixture-item {
+  border-radius: 10px; padding: 12px;
+  margin-bottom: 8px;
+  background: var(--nv); border: 1px solid #253A55;
+  cursor: pointer;
+}
+.fixture-item:active { transform: scale(.99); border-color: var(--ac) !important; }
+.fixture-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.fixture-teams { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; color: var(--wh); }
+.fixture-date { font-size: 11px; color: var(--mg); }
+.fixture-scores { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.fixture-score-chip { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--dn); color: var(--mg); }
+.fixture-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
+.fixture-badge.fast { background: var(--gc); color: var(--gd); }
+.fixture-badge.mixed { background: var(--yc); color: var(--yd); }
+.fixture-badge.slow { background: var(--rc); color: var(--rd); }
+.fixture-delete { background: none; border: none; color: var(--mg); font-size: 18px; cursor: pointer; padding: 4px; }
 </style>
 </head>
 <body>
@@ -600,6 +481,7 @@ body {
   </div>
 </div>
 
+<!-- API Modal -->
 <div class="modal-overlay" id="apiModal">
   <div class="modal-box">
     <div class="modal-header">
@@ -610,21 +492,18 @@ body {
       <div class="input-group" style="margin-bottom: 12px;">
         <span class="input-label">API-Sports.io API Key</span>
         <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Enter your API key...">
-        <div class="small-note" style="text-align: left; margin-top: 4px;">
-          🔑 Get your key from api-sports.io<br>
-          💾 Key stored locally in your browser only<br>
-          ⚡ Free plan: 100 requests/day
-        </div>
+        <div class="small-note">🔑 Key stored locally in your browser only | ⚡ Free plan: 100 requests/day</div>
       </div>
-      <div class="btn-row-split" style="gap: 8px;">
-        <button class="btn btn-accent" onclick="saveApiKey()">💾 Save API Key</button>
-        <button class="btn btn-ghost" onclick="testApiKey()">🔍 Test Connection</button>
+      <div class="btn-row-split" style="display: flex; gap: 8px;">
+        <button class="btn btn-accent" onclick="saveApiKey()" style="flex:1">💾 Save</button>
+        <button class="btn btn-ghost" onclick="testApiKey()" style="flex:1">🔍 Test</button>
       </div>
       <div id="apiTestResult" style="margin-top: 12px; font-size: 12px;"></div>
     </div>
   </div>
 </div>
 
+<!-- Fixture Detail Modal -->
 <div class="modal-overlay" id="fxDetailModal">
   <div class="modal-box">
     <div class="modal-header">
@@ -635,7 +514,7 @@ body {
   </div>
 </div>
 
-<!-- PAGE: INPUT -->
+<!-- ========== PAGE: INPUT ========== -->
 <div class="page active" id="page-input">
   <div class="card">
     <div class="card-header amber">
@@ -644,9 +523,18 @@ body {
     </div>
     <div class="card-body">
       <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-        <button class="btn btn-api" id="autoFillBtn" onclick="autoFillFromAPI()" style="flex: 1;">🤖 Auto-Fill from API</button>
+        <button class="btn btn-api" id="fetchFixturesBtn" onclick="fetchTodayFixtures()" style="flex:1;">📅 Get Today's Games</button>
         <button class="btn btn-ghost" onclick="openApiModal()" style="width: auto; padding: 14px 20px;">🔌 API Key</button>
       </div>
+      
+      <!-- Fixture Selector Dropdown -->
+      <div class="input-group" style="margin-bottom: 10px;" id="fixtureSelectorGroup" style="display:none;">
+        <span class="input-label">Select a game to auto-fill</span>
+        <select class="fixture-select" id="fixtureSelect" onchange="onFixtureSelect()">
+          <option value="">-- Loading fixtures --</option>
+        </select>
+      </div>
+      
       <div class="input-group" style="margin-bottom:10px">
         <span class="input-label">League Preset</span>
         <div class="league-select-wrap">
@@ -676,13 +564,14 @@ body {
     </div>
   </div>
 
+  <!-- TEAM A -->
   <div class="card">
     <div class="card-header">
       <span>🏀</span>
       <span class="card-header-title" style="color:var(--ac)">Team A — Last 3 Games (Most Recent First)</span>
     </div>
     <div class="card-body">
-      <input type="text" class="team-name-input" id="teamAName" placeholder="Team A Name" value="TEAM A" oninput="onInputChange()">
+      <input type="text" class="team-name-input" id="teamAName" placeholder="Team A Name" value="LA Lakers" oninput="onInputChange()">
       <div id="teamADataCheck" class="data-check ok">✅ Fill all 3 games</div>
       <div id="teamAGames"></div>
       <div class="divider"></div>
@@ -691,13 +580,14 @@ body {
     </div>
   </div>
 
+  <!-- TEAM B -->
   <div class="card">
     <div class="card-header" style="background:linear-gradient(135deg,var(--mb),#3B72C4)">
       <span>🏀</span>
       <span class="card-header-title" style="color:#DBEAFE">Team B — Last 3 Games (Most Recent First)</span>
     </div>
     <div class="card-body">
-      <input type="text" class="team-name-input" id="teamBName" placeholder="Team B Name" value="TEAM B" oninput="onInputChange()">
+      <input type="text" class="team-name-input" id="teamBName" placeholder="Team B Name" value="Golden State" oninput="onInputChange()">
       <div id="teamBDataCheck" class="data-check ok">✅ Fill all 3 games</div>
       <div id="teamBGames"></div>
       <div class="divider"></div>
@@ -706,18 +596,19 @@ body {
     </div>
   </div>
 
-  <div class="btn-row-split">
-    <button class="btn btn-accent" onclick="navigateTo('analysis')">⚡ ANALYZE MATCHUP →</button>
-    <button class="btn btn-ghost" onclick="confirmReset()">🔄 RESET</button>
+  <div class="btn-row-split" style="display: flex; gap: 8px;">
+    <button class="btn btn-accent" onclick="navigateTo('analysis')" style="flex:2">⚡ ANALYZE MATCHUP →</button>
+    <button class="btn btn-ghost" onclick="confirmReset()" style="flex:1">🔄 RESET</button>
   </div>
   <div class="small-note">RESET clears all inputs · Saved log is unaffected · Data auto-saves</div>
 </div>
 
-<!-- PAGE: ANALYSIS -->
+<!-- ========== PAGE: ANALYSIS ========== -->
 <div class="page" id="page-analysis">
-  <div id="dataLockout" style="display:none" class="data-check bad" style="margin-bottom:12px">⛔ INCOMPLETE DATA — Return to Input and fill all 3 games for both teams</div>
+  <div id="dataLockout" style="display:none" class="data-check bad">⛔ INCOMPLETE DATA — Fill all 3 games for both teams</div>
   <div class="score-display" id="scoreDisplay"></div>
   <div class="classification invalid" id="classificationBadge">— Enter data —</div>
+  
   <div class="card">
     <div class="card-header green"><span>📊</span><span class="card-header-title">Rating Breakdown</span></div>
     <div class="card-body">
@@ -726,6 +617,7 @@ body {
       <div id="ratingGridB" class="rating-grid" style="display:none"></div>
     </div>
   </div>
+  
   <div class="card">
     <div class="card-header amber"><span>⚡</span><span class="card-header-title">Tempo Control</span></div>
     <div class="card-body">
@@ -733,57 +625,72 @@ body {
       <div class="meter-row"><div class="meter-box"><div class="meter-label">Trap Risk</div><div class="meter-value trap" id="trapPct">—</div></div><div class="meter-box"><div class="meter-label">Confidence</div><div class="meter-value conf" id="confPct">—</div></div><div class="meter-box"><div class="meter-label">OT Risk</div><div class="meter-value" id="otRisk" style="color:var(--mg)">—</div></div></div>
     </div>
   </div>
+  
   <div class="card"><div class="card-header red"><span>🚨</span><span class="card-header-title">Alert System (9 Checks)</span></div><div class="card-body" id="alertsContainer"></div></div>
-  <div class="card"><div class="card-header" style="background:linear-gradient(135deg,#78350F,#B45309)"><span>🎯</span><span class="card-header-title">Auto Suggestion</span></div><div class="card-body"><div class="suggestion-main" id="mainSuggestion">—</div><div class="suggestion-secondary" id="secondarySuggestion">—</div><div id="mixedGuide" style="display:none" class="alert-item warn"><div><span class="alert-label">Mixed Zone 5–7 Guide</span>📌 (1) Check if both teams same style (2) Q1 combined ≥ league Q1 fast threshold? (3) Line moving up? (4) OT risk flagged? If Q1 is slow → lean under regardless of pre-game score.</div></div><div id="trapCaveat" style="display:none" class="alert-item info"><div><span class="alert-label">0% Trap Caveat</span>⚠️ 0% trap risk does NOT guarantee safety. Verify volume data is complete. Check for OT risk and single-game shooting outliers.</div></div></div></div>
+  
+  <div class="card"><div class="card-header" style="background:linear-gradient(135deg,#78350F,#B45309)"><span>🎯</span><span class="card-header-title">Auto Suggestion</span></div><div class="card-body"><div class="suggestion-main" id="mainSuggestion">—</div><div class="suggestion-secondary" id="secondarySuggestion">—</div></div></div>
+  
   <button class="btn btn-accent" onclick="saveToLog()">💾 SAVE TO FIXTURE LOG</button>
 </div>
 
-<!-- PAGE: Q1 TRACKER -->
+<!-- ========== PAGE: Q1 TRACKER ========== -->
 <div class="page" id="page-q1">
-  <div class="card"><div class="card-header red"><span>🔴</span><span class="card-header-title">Live Q1 Tracker</span></div><div class="card-body"><div class="small-note" style="margin-bottom:12px;text-align:left;color:var(--lg)">Enter Q1 data as the game happens. Thresholds auto-adjust to your selected league.</div>
-  <div class="input-grid" style="margin-bottom:10px"><div class="input-group"><span class="input-label">Team A Q1 Pts</span><input type="number" class="input-field" id="q1A" placeholder="e.g. 28" oninput="calcQ1()"></div><div class="input-group"><span class="input-label">Team B Q1 Pts</span><input type="number" class="input-field" id="q1B" placeholder="e.g. 24" oninput="calcQ1()"></div><div class="input-group"><span class="input-label">Team A Q1 FGA</span><input type="number" class="input-field" id="q1AFGA" placeholder="e.g. 22" oninput="calcQ1()"></div><div class="input-group"><span class="input-label">Team B Q1 FGA</span><input type="number" class="input-field" id="q1BFGA" placeholder="e.g. 20" oninput="calcQ1()"></div><div class="input-group"><span class="input-label">Team A Q1 3PA</span><input type="number" class="input-field" id="q1A3PA" placeholder="e.g. 8" oninput="calcQ1()"></div><div class="input-group"><span class="input-label">Team B Q1 3PA</span><input type="number" class="input-field" id="q1B3PA" placeholder="e.g. 7" oninput="calcQ1()"></div></div>
-  <div class="q1-grid"><div class="q1-result"><div class="q1-result-label">Combined Q1</div><div class="q1-result-val" id="q1Combined">—</div></div><div class="q1-result"><div class="q1-result-label">Projected Total</div><div class="q1-result-val" id="q1Projected">—</div></div><div class="q1-result"><div class="q1-result-label">Combined FGA</div><div class="q1-result-val" id="q1FGACombined">—</div></div><div class="q1-result"><div class="q1-result-label">Combined 3PA</div><div class="q1-result-val" id="q1TPACombined">—</div></div></div>
-  <div id="q1Assessment" class="classification invalid" style="margin-top:10px;font-size:16px">Enter Q1 data above</div>
-  <div id="q1LiveCall" class="suggestion-main" style="margin-top:10px;font-size:16px">—</div></div></div>
+  <div class="card"><div class="card-header red"><span>🔴</span><span class="card-header-title">Live Q1 Tracker</span></div><div class="card-body">
+    <div class="small-note">Enter Q1 data as the game happens. Thresholds auto-adjust to your selected league.</div>
+    <div class="input-grid" style="margin-bottom:10px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+      <div class="input-group"><span class="input-label">Team A Q1 Pts</span><input type="number" class="input-field" id="q1A" placeholder="e.g. 28" oninput="calcQ1()"></div>
+      <div class="input-group"><span class="input-label">Team B Q1 Pts</span><input type="number" class="input-field" id="q1B" placeholder="e.g. 24" oninput="calcQ1()"></div>
+      <div class="input-group"><span class="input-label">Team A Q1 FGA</span><input type="number" class="input-field" id="q1AFGA" placeholder="e.g. 22" oninput="calcQ1()"></div>
+      <div class="input-group"><span class="input-label">Team B Q1 FGA</span><input type="number" class="input-field" id="q1BFGA" placeholder="e.g. 20" oninput="calcQ1()"></div>
+      <div class="input-group"><span class="input-label">Team A Q1 3PA</span><input type="number" class="input-field" id="q1A3PA" placeholder="e.g. 8" oninput="calcQ1()"></div>
+      <div class="input-group"><span class="input-label">Team B Q1 3PA</span><input type="number" class="input-field" id="q1B3PA" placeholder="e.g. 7" oninput="calcQ1()"></div>
+    </div>
+    <div class="q1-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+      <div class="q1-result"><div class="q1-result-label">Combined Q1</div><div class="q1-result-val" id="q1Combined">—</div></div>
+      <div class="q1-result"><div class="q1-result-label">Projected Total</div><div class="q1-result-val" id="q1Projected">—</div></div>
+      <div class="q1-result"><div class="q1-result-label">Combined FGA</div><div class="q1-result-val" id="q1FGACombined">—</div></div>
+      <div class="q1-result"><div class="q1-result-label">Combined 3PA</div><div class="q1-result-val" id="q1TPACombined">—</div></div>
+    </div>
+    <div id="q1Assessment" class="classification invalid" style="margin-top:10px;font-size:16px">Enter Q1 data above</div>
+    <div id="q1LiveCall" class="suggestion-main" style="margin-top:10px;font-size:16px">—</div>
+  </div></div>
   <div class="card"><div class="card-header"><span>📋</span><span class="card-header-title">Q1 Benchmarks by League</span></div><div class="card-body" id="q1Benchmarks"></div></div>
 </div>
 
-<!-- PAGE: FIXTURE LOG -->
+<!-- ========== PAGE: FIXTURE LOG ========== -->
 <div class="page" id="page-log">
-  <div class="log-top-row"><div class="section-title">Saved Fixtures</div><div class="log-btn-group no-print"><button class="btn btn-print" onclick="printFixtures()">🖨️ PDF</button><button class="btn btn-ghost" onclick="clearAllFixtures()">🗑 Clear</button></div></div>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+    <div class="section-title">Saved Fixtures</div>
+    <div style="display:flex; gap:6px;"><button class="btn btn-ghost" onclick="clearAllFixtures()" style="padding:8px 12px; width:auto;">🗑 Clear</button></div>
+  </div>
   <div id="fixtureList"></div>
-  <div id="fixtureEmpty" class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No fixtures saved yet.<br>Analyze a matchup and tap "Save to Fixture Log".</div></div>
-  <div id="fixtureStats" style="display:none" class="card"><div class="card-header green"><span>📈</span><span class="card-header-title">Log Statistics</span></div><div class="card-body" id="fixtureStatsBody"></div></div>
+  <div id="fixtureEmpty" class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No fixtures saved yet.</div></div>
 </div>
 
-<!-- PAGE: PREDICTIONS -->
+<!-- ========== PAGE: PREDICTIONS ========== -->
 <div class="page" id="page-preds">
-  <div class="pred-date-banner"><div class="pred-date-title" id="predDateTitle">TODAY'S PICKS</div><div class="pred-date-sub" id="predDateSub">Loading...</div></div>
-  <div class="card" style="margin-bottom:12px"><div class="card-header" style="background:linear-gradient(135deg,#0C4A6E,#0369A1)"><span>🔮</span><span class="card-header-title">Prediction Engine</span></div><div class="card-body"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px"><div class="input-group"><span class="input-label">League Filter</span><div class="league-select-wrap"><select class="league-select" id="predLeagueFilter" onchange="renderPredictions()" style="font-size:13px"><option value="ALL">All Leagues</option></select><span class="select-arrow">▼</span></div></div><div class="input-group"><span class="input-label">Min Confidence</span><div class="league-select-wrap"><select class="league-select" id="predConfMin" onchange="renderPredictions()" style="font-size:13px"><option value="0">All</option><option value="50">≥ 50%</option><option value="60">≥ 60%</option><option value="70">≥ 70%</option></select><span class="select-arrow">▼</span></div></div></div><div class="small-note" style="text-align:left;color:var(--mg)">📌 Predictions auto-generate from today's saved fixtures. Save a fixture → it appears here with full betting analysis.</div></div></div>
-  <div id="predsList"></div><div id="predsEmpty" class="pred-empty-state"><div class="pred-empty-icon">🔮</div><div class="pred-empty-text">No fixtures saved today yet.<br><br>Go to Input → Enter fixture → Analyze → Save to Log.<br>Your prediction appears here automatically.</div></div>
+  <div class="card"><div class="card-header purple"><span>🔮</span><span class="card-header-title">Today's Predictions</span></div><div class="card-body"><div id="predsList"></div><div id="predsEmpty" class="empty-state">Save fixtures to see predictions</div></div></div>
 </div>
 
-<!-- PAGE: GUIDE -->
+<!-- ========== PAGE: GUIDE ========== -->
 <div class="page" id="page-guide">
   <div class="card"><div class="card-header amber"><span>📖</span><span class="card-header-title">How to Use v3.4</span></div><div class="card-body" id="guideContent"></div></div>
-  <div class="card"><div class="card-header purple"><span>🌍</span><span class="card-header-title">League Reference</span></div><div class="card-body" id="leagueRefContent"></div></div>
-  <div class="card"><div class="card-header" style="background:linear-gradient(135deg,var(--or),#C2410C)"><span>📝</span><span class="card-header-title">v3.4 Upgrade Log</span></div><div class="card-body" id="upgradeLogContent"></div></div>
 </div>
 
 <nav class="bottom-nav">
-  <button class="nav-btn active" id="nav-input" onclick="navigateTo('input')"><span class="nav-icon">✏️</span><span class="nav-label">Input</span></button>
-  <button class="nav-btn" id="nav-analysis" onclick="navigateTo('analysis')"><span class="nav-icon">📊</span><span class="nav-label">Analysis</span></button>
-  <button class="nav-btn" id="nav-q1" onclick="navigateTo('q1')"><span class="nav-icon">🔴</span><span class="nav-label">Q1</span></button>
-  <button class="nav-btn" id="nav-log" onclick="navigateTo('log')"><span class="nav-icon">📋</span><span class="nav-label">Log</span></button>
-  <button class="nav-btn" id="nav-preds" onclick="navigateTo('preds')"><span class="nav-icon">🔮</span><span class="nav-label">Picks</span></button>
-  <button class="nav-btn" id="nav-guide" onclick="navigateTo('guide')"><span class="nav-icon">📖</span><span class="nav-label">Guide</span></button>
+  <button class="nav-btn active" onclick="navigateTo('input')"><span class="nav-icon">✏️</span><span class="nav-label">Input</span></button>
+  <button class="nav-btn" onclick="navigateTo('analysis')"><span class="nav-icon">📊</span><span class="nav-label">Analysis</span></button>
+  <button class="nav-btn" onclick="navigateTo('q1')"><span class="nav-icon">🔴</span><span class="nav-label">Q1</span></button>
+  <button class="nav-btn" onclick="navigateTo('log')"><span class="nav-icon">📋</span><span class="nav-label">Log</span></button>
+  <button class="nav-btn" onclick="navigateTo('preds')"><span class="nav-icon">🔮</span><span class="nav-label">Picks</span></button>
+  <button class="nav-btn" onclick="navigateTo('guide')"><span class="nav-icon">📖</span><span class="nav-label">Guide</span></button>
 </nav>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ============================================================
-// COMPLETE LEAGUE DATA - ALL 30+ LEAGUES RESTORED (v3.4)
+// COMPLETE LEAGUE DATA - ALL 30+ LEAGUES RESTORED
 // ============================================================
 const LEAGUES = {
   "NBA": {pHi:215,pMid:200,pLo:185,fHi:88,fMid:82,fLo:75,tHi:33,tLo:27,q1F:28,q1S:22,range:"215–230",apiId:12},
@@ -819,12 +726,12 @@ const LEAGUES = {
 };
 
 // ============================================================
-// STATE (Game order: index 0 = Most Recent)
+// STATE
 // ============================================================
 let state = {
   league: "NBA",
-  teamAName: "TEAM A",
-  teamBName: "TEAM B",
+  teamAName: "LA Lakers",
+  teamBName: "Golden State",
   gamesA: [{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0}],
   gamesB: [{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0}],
   defA: [{fgPct:0,ast:0},{fgPct:0,ast:0},{fgPct:0,ast:0}],
@@ -832,6 +739,7 @@ let state = {
   h2hGames: [{a:null,b:null},{a:null,b:null},{a:null,b:null}],
   analysis: null,
   apiKey: "",
+  todayFixtures: [],
 };
 
 // ============================================================
@@ -842,7 +750,7 @@ function saveState() {
   try { localStorage.setItem('bma_v34_apikey', state.apiKey); } catch(e){}
 }
 function loadState() {
-  try { const s = localStorage.getItem('bma_v34_state'); if (s) Object.assign(state, JSON.parse(s)); } catch(e){}
+  try { const s = localStorage.getItem('bma_v34_state'); if (s) { const p = JSON.parse(s); Object.assign(state, p); } } catch(e){}
   try { const key = localStorage.getItem('bma_v34_apikey'); if (key) state.apiKey = key; } catch(e){}
   updateApiStatusUI();
 }
@@ -854,7 +762,7 @@ function saveFixtures(arr) {
 }
 
 // ============================================================
-// API-SPORTS (CORRECTED - Using v1.basketball.api-sports.io)
+// API-SPORTS (v1.basketball.api-sports.io)
 // ============================================================
 const API_BASE = "https://v1.basketball.api-sports.io";
 
@@ -900,78 +808,111 @@ async function testApiKey() {
       document.getElementById('apiTestResult').innerHTML = `<span style="color:#F59E0B;">⚠️ Status ${resp.status}</span>`;
     }
   } catch(e) {
-    document.getElementById('apiTestResult').innerHTML = '<span style="color:#EF4444;">❌ Network error - check CORS or connection</span>';
+    document.getElementById('apiTestResult').innerHTML = '<span style="color:#EF4444;">❌ Network error</span>';
   }
 }
 
-async function searchTeam(teamName, leagueId) {
-  try {
-    let url = `${API_BASE}/teams?search=${encodeURIComponent(teamName)}`;
-    if (leagueId) url += `&league=${leagueId}`;
-    const resp = await fetch(url, { headers: { 'x-apisports-key': state.apiKey } });
-    const data = await resp.json();
-    if (data.response && data.response.length > 0) {
-      // Try to find exact match by name
-      const exactMatch = data.response.find(t => t.name.toLowerCase() === teamName.toLowerCase());
-      if (exactMatch) return exactMatch;
-      return data.response[0];
-    }
-    return null;
-  } catch(e) {
-    console.error(e);
-    return null;
-  }
-}
-
-async function fetchTeamGames(teamSide, teamId, teamName) {
-  const leagueId = LEAGUES[state.league]?.apiId;
-  if (!leagueId) {
-    showToast(`⚠️ No API ID for ${state.league}. Manual entry only.`);
-    return false;
+// FETCH TODAY'S FIXTURES
+async function fetchTodayFixtures() {
+  if (!state.apiKey) {
+    showToast('❌ Please configure API key first');
+    openApiModal();
+    return;
   }
   
+  const leagueId = LEAGUES[state.league]?.apiId;
+  if (!leagueId) {
+    showToast(`⚠️ No API ID for ${state.league}. Try NBA or EuroLeague`);
+    return;
+  }
+  
+  const today = new Date().toISOString().split('T')[0];
+  const btn = document.getElementById('fetchFixturesBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span> Loading games...';
+  
   try {
-    // Get current season (2024 or 2025)
-    const currentYear = new Date().getFullYear();
-    const season = `${currentYear-1}-${currentYear}`;
-    
-    const resp = await fetch(`${API_BASE}/games?team=${teamId}&league=${leagueId}&season=${season}`, {
+    const resp = await fetch(`${API_BASE}/games?date=${today}&league=${leagueId}`, {
       headers: { 'x-apisports-key': state.apiKey }
     });
     const data = await resp.json();
     
-    if (!data.response || data.response.length === 0) {
-      showToast(`⚠️ No recent games found for ${teamName}`);
-      return false;
+    if (data.response && data.response.length > 0) {
+      state.todayFixtures = data.response;
+      const select = document.getElementById('fixtureSelect');
+      select.innerHTML = '<option value="">-- Select a game --</option>' + 
+        data.response.map(game => {
+          const home = game.teams.home.name;
+          const away = game.teams.away.name;
+          const time = game.time || '';
+          return `<option value="${game.id}">${home} vs ${away} ${time}</option>`;
+        }).join('');
+      document.getElementById('fixtureSelectorGroup').style.display = 'block';
+      showToast(`📅 Found ${data.response.length} games today`);
+    } else {
+      showToast('No games scheduled for today in this league');
     }
+  } catch(e) {
+    console.error(e);
+    showToast('Error fetching fixtures');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '📅 Get Today\'s Games';
+  }
+}
+
+// When user selects a fixture from dropdown
+async function onFixtureSelect() {
+  const select = document.getElementById('fixtureSelect');
+  const gameId = select.value;
+  if (!gameId) return;
+  
+  const game = state.todayFixtures.find(g => g.id == gameId);
+  if (!game) return;
+  
+  showToast(`Loading ${game.teams.home.name} vs ${game.teams.away.name}...`);
+  
+  // Set team names
+  state.teamAName = game.teams.home.name;
+  state.teamBName = game.teams.away.name;
+  document.getElementById('teamAName').value = state.teamAName;
+  document.getElementById('teamBName').value = state.teamBName;
+  
+  // Fetch both teams' last 3 games
+  await fetchTeamGamesComplete('A', game.teams.home.id, game.teams.home.name);
+  await fetchTeamGamesComplete('B', game.teams.away.id, game.teams.away.name);
+  
+  // Fetch H2H
+  await fetchH2HData(game.teams.home.id, game.teams.away.id);
+  
+  showToast('✅ Game data loaded! Check and adjust if needed.');
+}
+
+async function fetchTeamGamesComplete(teamSide, teamId, teamName) {
+  const leagueId = LEAGUES[state.league]?.apiId;
+  if (!leagueId) return false;
+  
+  try {
+    const currentYear = new Date().getFullYear();
+    const resp = await fetch(`${API_BASE}/games?team=${teamId}&league=${leagueId}&season=${currentYear-1}-${currentYear}`, {
+      headers: { 'x-apisports-key': state.apiKey }
+    });
+    const data = await resp.json();
     
-    // Filter for regular season and sort by date DESC (most recent first)
+    if (!data.response || data.response.length === 0) return false;
+    
+    // Get completed games only, sorted by date DESC (most recent first)
     let games = data.response.filter(g => g.status?.short === "FT" || g.status?.short === "AOT");
     if (games.length === 0) games = data.response;
     games = games.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
     
-    if (games.length === 0) {
-      showToast(`⚠️ No completed games found for ${teamName}`);
-      return false;
-    }
-    
-    // Update team name
-    if (teamSide === 'A') {
-      state.teamAName = teamName;
-      document.getElementById('teamAName').value = teamName;
-    } else {
-      state.teamBName = teamName;
-      document.getElementById('teamBName').value = teamName;
-    }
-    
-    // Fetch stats for each game
     for (let i = 0; i < games.length; i++) {
       const game = games[i];
       const isHome = game.teams.home.id === teamId;
       const teamScore = isHome ? game.scores.home.total : game.scores.away.total;
       const oppScore = isHome ? game.scores.away.total : game.scores.home.total;
       
-      // Get team statistics for this game
+      // Get team stats for FGA/3PA
       let fga = 0, tpa = 0;
       try {
         const statsResp = await fetch(`${API_BASE}/games/statistics?game=${game.id}&team=${teamId}`, {
@@ -979,11 +920,10 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
         });
         const statsData = await statsResp.json();
         if (statsData.response && statsData.response.length > 0) {
-          const teamStats = statsData.response[0];
-          fga = teamStats.fieldGoals?.attempts || 0;
-          tpa = teamStats.threePoints?.attempts || 0;
+          fga = statsData.response[0].fieldGoals?.attempts || 0;
+          tpa = statsData.response[0].threePoints?.attempts || 0;
         }
-      } catch(e) { console.log("Stats fetch error:", e); }
+      } catch(e) {}
       
       const gameData = { ts: teamScore || 0, os: oppScore || 0, fga: fga, tpa: tpa };
       
@@ -993,7 +933,7 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
         state.gamesB[i] = gameData;
       }
       
-      // Get opponent statistics for defensive metrics
+      // Get opponent stats for defensive metrics
       const oppId = isHome ? game.teams.away.id : game.teams.home.id;
       let oppFgPct = 0.45, oppAst = 20;
       try {
@@ -1002,13 +942,12 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
         });
         const oppStatsData = await oppStatsResp.json();
         if (oppStatsData.response && oppStatsData.response.length > 0) {
-          const oppStats = oppStatsData.response[0];
-          const fgMade = oppStats.fieldGoals?.made || 0;
-          const fgAtt = oppStats.fieldGoals?.attempts || 1;
+          const fgMade = oppStatsData.response[0].fieldGoals?.made || 0;
+          const fgAtt = oppStatsData.response[0].fieldGoals?.attempts || 1;
           oppFgPct = parseFloat((fgMade / fgAtt).toFixed(3));
-          oppAst = oppStats.assists || 0;
+          oppAst = oppStatsData.response[0].assists || 0;
         }
-      } catch(e) { console.log("Opponent stats fetch error:", e); }
+      } catch(e) {}
       
       if (teamSide === 'A') {
         state.defA[i] = { fgPct: oppFgPct, ast: oppAst };
@@ -1017,104 +956,45 @@ async function fetchTeamGames(teamSide, teamId, teamName) {
       }
     }
     
-    // Rebuild UI
     buildGameInputs(teamSide);
     buildDefInputs(teamSide);
     saveState();
-    checkDataCompleteness();
-    showToast(`✅ ${teamName} data loaded!`);
     return true;
-    
   } catch(e) {
     console.error(e);
-    showToast(`❌ Error fetching ${teamName} data`);
     return false;
   }
 }
 
-async function fetchH2HData() {
-  const leagueId = LEAGUES[state.league]?.apiId;
-  if (!leagueId) return;
-  
+async function fetchH2HData(teamAId, teamBId) {
   try {
-    // Search for both teams first to get IDs
-    const teamA = await searchTeam(state.teamAName, leagueId);
-    const teamB = await searchTeam(state.teamBName, leagueId);
+    const resp = await fetch(`${API_BASE}/games?h2h=${teamAId}-${teamBId}`, {
+      headers: { 'x-apisports-key': state.apiKey }
+    });
+    const data = await resp.json();
     
-    if (teamA && teamB) {
-      const h2hResp = await fetch(`${API_BASE}/games?h2h=${teamA.id}-${teamB.id}&league=${leagueId}`, {
-        headers: { 'x-apisports-key': state.apiKey }
-      });
-      const h2hData = await h2hResp.json();
-      
-      if (h2hData.response && h2hData.response.length > 0) {
-        const h2hGames = h2hData.response.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
-        for (let i = 0; i < h2hGames.length && i < 3; i++) {
-          const game = h2hGames[i];
-          const aScore = game.teams.home.id === teamA.id ? game.scores.home.total : game.scores.away.total;
-          const bScore = game.teams.away.id === teamB.id ? game.scores.away.total : game.scores.home.total;
-          state.h2hGames[i] = { a: aScore, b: bScore };
-        }
-        buildH2HUI();
-        updateH2HSummary();
-        saveState();
-        showToast(`✅ H2H data loaded (${h2hGames.length} games)`);
+    if (data.response && data.response.length > 0) {
+      const h2hGames = data.response.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+      for (let i = 0; i < h2hGames.length && i < 3; i++) {
+        const game = h2hGames[i];
+        const aScore = game.teams.home.id === teamAId ? game.scores.home.total : game.scores.away.total;
+        const bScore = game.teams.away.id === teamBId ? game.scores.away.total : game.scores.home.total;
+        state.h2hGames[i] = { a: aScore, b: bScore };
       }
+      buildH2HUI();
+      updateH2HSummary();
+      saveState();
     }
-  } catch(e) {
-    console.log('H2H fetch skipped:', e);
-  }
-}
-
-async function autoFillFromAPI() {
-  if (!state.apiKey) {
-    showToast('❌ Please configure API key first');
-    openApiModal();
-    return;
-  }
-  
-  const teamAName = document.getElementById('teamAName').value;
-  const teamBName = document.getElementById('teamBName').value;
-  
-  if (!teamAName || teamAName === 'TEAM A' || !teamBName || teamBName === 'TEAM B') {
-    showToast('Please enter both team names first');
-    return;
-  }
-  
-  const btn = document.getElementById('autoFillBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span> Fetching...';
-  
-  try {
-    const leagueId = LEAGUES[state.league]?.apiId;
-    const teamA = await searchTeam(teamAName, leagueId);
-    const teamB = await searchTeam(teamBName, leagueId);
-    
-    if (!teamA) showToast(`Team "${teamAName}" not found in ${state.league}`);
-    if (!teamB) showToast(`Team "${teamBName}" not found in ${state.league}`);
-    
-    if (teamA) await fetchTeamGames('A', teamA.id, teamA.name);
-    if (teamB) await fetchTeamGames('B', teamB.id, teamB.name);
-    
-    await fetchH2HData();
-    showToast('✅ Auto-fill complete! Review and adjust if needed.');
-  } catch(e) {
-    console.error(e);
-    showToast('⚠️ API error. Check your key and try again.');
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '🤖 Auto-Fill from API';
-  }
+  } catch(e) {}
 }
 
 // ============================================================
-// BUILD INPUT UI (Most Recent First - Restored)
+// BUILD INPUT UI (MANUAL INPUT BOXES ARE VISIBLE)
 // ============================================================
 function buildInputUI() {
   const sel = document.getElementById('leagueSelect');
   sel.innerHTML = Object.keys(LEAGUES).map(l => `<option value="${l}" ${l===state.league?'selected':''}>${l}</option>`).join('');
   updateLeagueChip();
-  updateH2HBonus();
   document.getElementById('teamAName').value = state.teamAName;
   document.getElementById('teamBName').value = state.teamBName;
   buildGameInputs('A');
@@ -1122,6 +1002,7 @@ function buildInputUI() {
   buildDefInputs('A');
   buildDefInputs('B');
   buildH2HUI();
+  updateH2HSummary();
 }
 
 function buildGameInputs(team) {
@@ -1137,12 +1018,12 @@ function buildGameInputs(team) {
     div.className = 'game-row';
     div.innerHTML = `
       <div class="game-label">${labels[i]}</div>
-      <div class="input-grid-3" style="margin-bottom:6px">
+      <div class="input-grid-3" style="margin-bottom:6px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
         <div class="input-group"><span class="input-label">Team Score</span><input type="number" class="input-field" id="g${team}${i}ts" value="${g.ts||''}" placeholder="105" oninput="updateGame('${team}',${i},'ts',this.value)"></div>
         <div class="input-group"><span class="input-label">Opp Score</span><input type="number" class="input-field" id="g${team}${i}os" value="${g.os||''}" placeholder="98" oninput="updateGame('${team}',${i},'os',this.value)"></div>
         <div class="input-group"><span class="input-label">Total Pts</span><div class="total-pts-display" id="tp${team}${i}">${totalPts}</div></div>
       </div>
-      <div class="input-grid">
+      <div class="input-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
         <div class="input-group"><span class="input-label">FGA</span><input type="number" class="input-field" id="g${team}${i}fga" value="${g.fga||''}" placeholder="88" oninput="updateGame('${team}',${i},'fga',this.value)"></div>
         <div class="input-group"><span class="input-label">3PA</span><input type="number" class="input-field" id="g${team}${i}tpa" value="${g.tpa||''}" placeholder="32" oninput="updateGame('${team}',${i},'tpa',this.value)"></div>
       </div>
@@ -1163,7 +1044,7 @@ function buildDefInputs(team) {
     div.className = 'game-row';
     div.innerHTML = `
       <div class="game-label">${labels[i]}</div>
-      <div class="input-grid">
+      <div class="input-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
         <div class="input-group"><span class="input-label">FG% Allowed</span><input type="number" step="0.01" min="0" max="1" class="input-field pct" id="d${team}${i}fg" value="${d.fgPct||''}" placeholder="0.47" oninput="updateDef('${team}',${i},'fgPct',this.value)"></div>
         <div class="input-group"><span class="input-label">Assists Allowed</span><input type="number" class="input-field" id="d${team}${i}ast" value="${d.ast||''}" placeholder="22" oninput="updateDef('${team}',${i},'ast',this.value)"></div>
       </div>
@@ -1184,7 +1065,7 @@ function buildH2HUI() {
     const div = document.createElement('div');
     div.innerHTML = `
       <div class="h2h-game-label">H2H ${labels[i]}</div>
-      <div class="h2h-game-row">
+      <div class="h2h-game-row" style="display:grid; grid-template-columns:1fr auto 1fr auto; gap:6px; align-items:center;">
         <input type="number" class="h2h-score-input" id="h2h${i}a" value="${aVal}" placeholder="A score" oninput="onH2HScoreChange(${i},'a',this.value)">
         <div class="h2h-vs-badge">VS</div>
         <input type="number" class="h2h-score-input" id="h2h${i}b" value="${bVal}" placeholder="B score" oninput="onH2HScoreChange(${i},'b',this.value)">
@@ -1215,8 +1096,7 @@ function getH2HStats() {
     const diff = totals[totals.length-1] - totals[0];
     trend = diff >= 6 ? 'rising' : diff <= -6 ? 'falling' : 'stable';
   }
-  const dominant = aWins > bWins ? 'A' : bWins > aWins ? 'B' : 'even';
-  return { totals, aWins, bWins, avgTotal, avgMargin, trend, dominant, count: complete.length };
+  return { totals, aWins, bWins, avgTotal, avgMargin, trend, count: complete.length };
 }
 
 function updateH2HSummary() {
@@ -1280,28 +1160,26 @@ function onInputChange() {
 }
 
 function checkDataCompleteness() {
-  const aComplete = state.gamesA.every(g => g.ts && g.os && g.fga);
-  const bComplete = state.gamesB.every(g => g.ts && g.os && g.fga);
+  const aComplete = state.gamesA.every(g => g.ts && g.os);
+  const bComplete = state.gamesB.every(g => g.ts && g.os);
   const elA = document.getElementById('teamADataCheck');
   const elB = document.getElementById('teamBDataCheck');
-  if (elA) { elA.className = `data-check ${aComplete ? 'ok' : 'bad'}`; elA.textContent = aComplete ? '✅ Team A data complete' : '⛔ Fill all 3 games (Score + FGA required)'; }
-  if (elB) { elB.className = `data-check ${bComplete ? 'ok' : 'bad'}`; elB.textContent = bComplete ? '✅ Team B data complete' : '⛔ Fill all 3 games (Score + FGA required)'; }
+  if (elA) { elA.className = `data-check ${aComplete ? 'ok' : 'bad'}`; elA.textContent = aComplete ? '✅ Team A data complete' : '⛔ Fill all 3 games (Score required)'; }
+  if (elB) { elB.className = `data-check ${bComplete ? 'ok' : 'bad'}`; elB.textContent = bComplete ? '✅ Team B data complete' : '⛔ Fill all 3 games (Score required)'; }
 }
 
 // ============================================================
-// CORE ANALYSIS ENGINE (FULLY PRESERVED from v3.2)
+// CORE ANALYSIS ENGINE (FULLY PRESERVED FROM v3.2)
 // ============================================================
 function avg(arr) { return arr.reduce((a,b)=>a+b,0)/arr.length; }
-
-function getChronologicalGames(games) { return [...games].reverse(); }
 
 function calcRatings() {
   const L = LEAGUES[state.league];
   const gA = state.gamesA, gB = state.gamesB;
   const dA = state.defA, dB = state.defB;
   
-  const aComplete = gA.every(g => g.ts && g.os && g.fga);
-  const bComplete = gB.every(g => g.ts && g.os && g.fga);
+  const aComplete = gA.every(g => g.ts && g.os);
+  const bComplete = gB.every(g => g.ts && g.os);
   if (!aComplete || !bComplete) return { invalid: true };
   
   const avgPtsA = avg(gA.map(g => g.ts + g.os));
@@ -1449,7 +1327,9 @@ function runAnalysis() {
   ['A','B'].forEach(team => {
     const scores = team === 'A' ? scoresA : scoresB;
     const el = document.getElementById(`ratingGrid${team}`);
-    el.innerHTML = cats.map((c,i) => `<div class="rating-item"><div class="rating-item-label">${c.label}</div><div class="rating-item-bar"><div class="rating-bar-track"><div class="rating-bar-fill" style="width:${scores[i]/c.max*100}%"></div></div></div><div style="display:flex;align-items:baseline;gap:3px"><span class="rating-score">${scores[i]}</span><span class="rating-max">/ ${c.max}</span></div></div>`).join('');
+    if (el) {
+      el.innerHTML = cats.map((c,i) => `<div class="rating-item"><div class="rating-item-label">${c.label}</div><div class="rating-item-bar"><div class="rating-bar-track"><div class="rating-bar-fill" style="width:${scores[i]/c.max*100}%"></div></div></div><div style="display:flex;align-items:baseline;gap:3px"><span class="rating-score">${scores[i]}</span><span class="rating-max">/ ${c.max}</span></div></div>`).join('');
+    }
   });
   
   document.getElementById('tempoControl').textContent = r.tempo;
@@ -1460,15 +1340,12 @@ function runAnalysis() {
   document.getElementById('otRisk').style.color = r.otRisk ? 'var(--yf)' : 'var(--gf)';
   
   const ac = document.getElementById('alertsContainer');
-  ac.innerHTML = r.alerts.map(a => `<div class="alert-item ${a.type}"><div><span class="alert-label">${a.label}</span>${a.msg}</div></div>`).join('');
+  if (ac) {
+    ac.innerHTML = r.alerts.map(a => `<div class="alert-item ${a.type}"><div><span class="alert-label">${a.label}</span>${a.msg}</div></div>`).join('');
+  }
   
   document.getElementById('mainSuggestion').textContent = getSuggestion(r, r.combined);
   document.getElementById('secondarySuggestion').textContent = getSecondary(r);
-  
-  const mixedGuide = document.getElementById('mixedGuide');
-  const trapCaveat = document.getElementById('trapCaveat');
-  mixedGuide.style.display = (r.combined >= 5 && r.combined < 8) ? 'flex' : 'none';
-  trapCaveat.style.display = (r.trapPct === 0) ? 'flex' : 'none';
 }
 
 function showRatingTab(team) {
@@ -1528,128 +1405,78 @@ function calcQ1() {
 function renderQ1Benchmarks() {
   const L = LEAGUES[state.league];
   const el = document.getElementById('q1Benchmarks');
-  el.innerHTML = `<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--mg);margin-bottom:8px">${state.league}</div><div class="input-grid"><div class="alert-item ok" style="flex-direction:column;text-align:center"><span class="alert-label">Q1 Fast</span><span style="font-size:20px;font-weight:900">≥${L.q1F}</span><span style="font-size:11px">combined pts</span></div><div class="alert-item err" style="flex-direction:column;text-align:center"><span class="alert-label">Q1 Slow</span><span style="font-size:20px;font-weight:900">&lt;${L.q1S}</span><span style="font-size:11px">combined pts</span></div><div class="alert-item blue" style="flex-direction:column;text-align:center"><span class="alert-label">FGA Fast</span><span style="font-size:20px;font-weight:900">≥42</span><span style="font-size:11px">combined</span></div><div class="alert-item blue" style="flex-direction:column;text-align:center"><span class="alert-label">3PA Fast</span><span style="font-size:20px;font-weight:900">≥14</span><span style="font-size:11px">combined</span></div></div>`;
+  if (el) {
+    el.innerHTML = `<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--mg);margin-bottom:8px">${state.league}</div><div class="input-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:6px;"><div class="alert-item ok" style="flex-direction:column;text-align:center"><span class="alert-label">Q1 Fast</span><span style="font-size:20px;font-weight:900">≥${L.q1F}</span><span style="font-size:11px">combined pts</span></div><div class="alert-item err" style="flex-direction:column;text-align:center"><span class="alert-label">Q1 Slow</span><span style="font-size:20px;font-weight:900">&lt;${L.q1S}</span><span style="font-size:11px">combined pts</span></div></div>`;
+  }
 }
 
 // ============================================================
-// FIXTURE LOG & PREDICTIONS (PRESERVED)
+// FIXTURE LOG & PREDICTIONS
 // ============================================================
 function saveToLog() {
   const r = state.analysis;
   if (!r || r.invalid) { showToast('⛔ Cannot save — incomplete data'); return; }
-  const cls = getClassification(r.combined);
   const fixture = {
     id: Date.now(), date: new Date().toLocaleDateString('en-GB'), dateISO: new Date().toISOString().split('T')[0],
     league: state.league, teamA: state.teamAName, teamB: state.teamBName,
-    scoreA: r.scoreA, scoreB: r.scoreB, combined: r.combined, classification: cls.cls,
-    suggestion: getSuggestion(r, r.combined), secondary: getSecondary(r),
-    trapPct: r.trapPct, conf: r.conf, tempo: r.tempo, otRisk: r.otRisk, warnCount: r.warnCount,
-    alerts: r.alerts, avgPtsA: parseFloat(r.avgPtsA.toFixed(1)), avgFGAA: parseFloat(r.avgFGAA.toFixed(1)),
-    avgTPAA: parseFloat(r.avgTPAA.toFixed(1)), avgPtsB: parseFloat(r.avgPtsB.toFixed(1)),
-    avgFGAB: parseFloat(r.avgFGAB.toFixed(1)), avgTPAB: parseFloat(r.avgTPAB.toFixed(1)),
-    combFGA: parseFloat(r.combFGA.toFixed(1)), r1A:r.r1A, r2A:r.r2A, r3A:r.r3A, r4A:r.r4A, r5A:r.r5A,
-    r1B:r.r1B, r2B:r.r2B, r3B:r.r3B, r4B:r.r4B, r5B:r.r5B,
-    leagueRange: LEAGUES[state.league] ? LEAGUES[state.league].range : '—',
-    h2hGames: JSON.parse(JSON.stringify(state.h2hGames)), h2hStats: getH2HStats(),
-    version: "3.4"
+    scoreA: r.scoreA, scoreB: r.scoreB, combined: r.combined, classification: getClassification(r.combined).cls,
+    suggestion: getSuggestion(r, r.combined), trapPct: r.trapPct, conf: r.conf,
   };
   const fixtures = getFixtures();
   fixtures.unshift(fixture);
   saveFixtures(fixtures);
   showToast('✅ Saved to Fixture Log');
-  if (document.getElementById('page-log').classList.contains('active')) renderFixtureLog();
+  renderFixtureLog();
 }
 
 function renderFixtureLog() {
   const fixtures = getFixtures();
   const list = document.getElementById('fixtureList');
   const empty = document.getElementById('fixtureEmpty');
-  const stats = document.getElementById('fixtureStats');
-  if (!fixtures.length) { list.innerHTML = ''; empty.style.display = 'block'; stats.style.display = 'none'; return; }
-  empty.style.display = 'none'; stats.style.display = 'block';
-  list.innerHTML = fixtures.map(f => `<div class="fixture-item" onclick="openFxDetail(${f.id})"><div class="fixture-top"><div><div class="fixture-teams">${f.teamA} vs ${f.teamB}</div><div class="fixture-date">${f.date} · ${f.league}</div></div><button class="fixture-delete no-print" onclick="event.stopPropagation();deleteFixture(${f.id})">🗑</button></div><div class="fixture-scores"><span class="fixture-score-chip">A: ${f.scoreA}/10</span><span class="fixture-score-chip">B: ${f.scoreB}/10</span><span class="fixture-score-chip">Comb: ${f.combined}</span><span class="fixture-badge ${f.classification}">${f.classification.toUpperCase()}</span><span class="fixture-score-chip" style="color:${f.trapPct>=50?'var(--rf)':f.trapPct>=25?'var(--yf)':'var(--gf)'}">Trap: ${f.trapPct}%</span></div><div style="margin-top:8px;font-size:12px;color:var(--mg);line-height:1.3">${f.suggestion}</div><div class="fixture-tap-hint">👆 Tap to view full analysis</div></div>`).join('');
-  const total = fixtures.length, fast = fixtures.filter(f=>f.classification==='fast').length, mixed = fixtures.filter(f=>f.classification==='mixed').length, slow = fixtures.filter(f=>f.classification==='slow').length, avgComb = (fixtures.reduce((a,f)=>a+f.combined,0)/total).toFixed(1);
-  document.getElementById('fixtureStatsBody').innerHTML = `<div class="rating-grid" style="gap:6px"><div class="rating-item" style="text-align:center"><div class="rating-item-label">Total Fixtures</div><div class="rating-score" style="font-size:28px">${total}</div></div><div class="rating-item" style="text-align:center"><div class="rating-item-label">Avg Combined</div><div class="rating-score" style="font-size:28px">${avgComb}</div></div><div class="rating-item" style="text-align:center;border-color:var(--gf)"><div class="rating-item-label" style="color:var(--gf)">Fast</div><div class="rating-score" style="font-size:28px;color:var(--gf)">${fast}</div></div><div class="rating-item" style="text-align:center;border-color:var(--yf)"><div class="rating-item-label" style="color:var(--yf)">Mixed</div><div class="rating-score" style="font-size:28px;color:var(--yf)">${mixed}</div></div><div class="rating-item" style="text-align:center;border-color:var(--rf)"><div class="rating-item-label" style="color:var(--rf)">Slow</div><div class="rating-score" style="font-size:28px;color:var(--rf)">${slow}</div></div></div>`;
+  if (!fixtures.length) { if(list) list.innerHTML = ''; if(empty) empty.style.display = 'block'; return; }
+  if(empty) empty.style.display = 'none';
+  if(list) {
+    list.innerHTML = fixtures.map(f => `<div class="fixture-item" onclick="openFxDetail(${f.id})"><div class="fixture-top"><div><div class="fixture-teams">${f.teamA} vs ${f.teamB}</div><div class="fixture-date">${f.date} · ${f.league}</div></div><button class="fixture-delete" onclick="event.stopPropagation();deleteFixture(${f.id})">🗑</button></div><div class="fixture-scores"><span class="fixture-score-chip">Score: ${f.combined}/10</span><span class="fixture-badge ${f.classification}">${f.classification}</span><span class="fixture-score-chip">Trap: ${f.trapPct}%</span></div><div style="font-size:12px;color:var(--mg)">${f.suggestion}</div></div>`).join('');
+  }
 }
 
-function deleteFixture(id) { saveFixtures(getFixtures().filter(f => f.id !== id)); renderFixtureLog(); showToast('🗑 Fixture deleted'); }
-function clearAllFixtures() { if(confirm('Clear all saved fixtures?')){ saveFixtures([]); renderFixtureLog(); showToast('🗑 All fixtures cleared'); } }
-
-function openFxDetail(id) {
-  const f = getFixtures().find(x => x.id === id);
-  if (!f) return;
-  document.getElementById('fxModalTitle').textContent = `${f.teamA} vs ${f.teamB}`;
-  document.getElementById('fxModalBody').innerHTML = `<div style="font-size:10px;color:var(--mg);margin-bottom:12px">${f.date} · ${f.league} · v${f.version||'3.2'}</div><div class="score-display"><div class="score-box team-a"><div class="score-box-label">Team A</div><div class="score-box-name">${f.teamA}</div><div class="score-box-number">${f.scoreA}<span class="score-box-denom">/10</span></div></div><div class="score-box team-b"><div class="score-box-label">Team B</div><div class="score-box-name">${f.teamB}</div><div class="score-box-number">${f.scoreB}<span class="score-box-denom">/10</span></div></div><div class="score-box combined"><div class="score-box-label">Combined</div><div class="score-box-name">Score</div><div class="score-box-number">${f.combined}<span class="score-box-denom">/10</span></div></div></div><div class="classification ${f.classification}" style="margin-bottom:10px">${f.classification==='fast'?'🟢 FAST — HIGH PACE':f.classification==='mixed'?'🟡 MIXED / UNSTABLE':f.classification==='slow'?'🔴 SLOW — LOW PACE':'⚪ NO DATA'}</div><div class="suggestion-main" style="font-size:15px;margin-bottom:6px">${f.suggestion}</div><div class="suggestion-secondary" style="font-size:12px">${f.secondary||''}</div><button class="btn" style="margin-top:12px;background:rgba(255,255,255,.07);border:1px solid #253A55;color:var(--mg)" onclick="closeFxModal()">✕ Close</button>`;
-  document.getElementById('fxDetailModal').classList.add('active');
-}
+function deleteFixture(id) { saveFixtures(getFixtures().filter(f => f.id !== id)); renderFixtureLog(); showToast('🗑 Deleted'); }
+function clearAllFixtures() { if(confirm('Clear all saved fixtures?')){ saveFixtures([]); renderFixtureLog(); showToast('🗑 All cleared'); } }
+function openFxDetail(id) { const f = getFixtures().find(x => x.id === id); if(f){ document.getElementById('fxModalTitle').textContent = `${f.teamA} vs ${f.teamB}`; document.getElementById('fxModalBody').innerHTML = `<div style="font-size:12px">${f.date} · ${f.league}<br>Combined: ${f.combined}/10<br>Trap: ${f.trapPct}%<br>Confidence: ${f.conf}%<br><br>${f.suggestion}</div><button class="btn btn-ghost" style="margin-top:12px" onclick="closeFxModal()">Close</button>`; document.getElementById('fxDetailModal').classList.add('active'); } }
 function closeFxModal() { document.getElementById('fxDetailModal').classList.remove('active'); }
-function printFixtures() { showToast('📄 Print feature ready — click PDF button in log tab'); }
-
-function buildPredictionData(f) { return { predictions: [{label:`${f.classification.toUpperCase()} ${f.suggestion.substring(0,30)}`, bg:'#1E3A5F', color:'#93C5FD'}], reasons: [{color:'#3B82C4', text:`Based on ${f.league} analysis. Combined score: ${f.combined}/10. Trap risk: ${f.trapPct}%.`}], stars:'★★★☆☆', conf:f.conf || 50, confColor:'#F59E0B', line:null, avgTotal:null }; }
 
 function renderPredictions() {
-  const allFx = getFixtures();
-  const todayISO = new Date().toISOString().split('T')[0];
-  let fixtures = allFx.filter(f => f.dateISO === todayISO);
-  if (!fixtures.length) fixtures = allFx.slice(0, 8);
-  const leagueFil = document.getElementById('predLeagueFilter').value;
-  const confFil = parseInt(document.getElementById('predConfMin').value) || 0;
-  const leagues = ['ALL', ...new Set(allFx.map(f => f.league))];
-  const lfEl = document.getElementById('predLeagueFilter');
-  const curVal = lfEl.value;
-  lfEl.innerHTML = leagues.map(l => `<option value="${l}"${l===curVal?' selected':''}>${l}</option>`).join('');
-  if (leagueFil !== 'ALL') fixtures = fixtures.filter(f => f.league === leagueFil);
-  if (confFil > 0) fixtures = fixtures.filter(f => (f.conf||0) >= confFil);
-  const cont = document.getElementById('predsList');
+  const fixtures = getFixtures();
+  const today = new Date().toISOString().split('T')[0];
+  const todayFx = fixtures.filter(f => f.dateISO === today).slice(0, 10);
+  const container = document.getElementById('predsList');
   const empty = document.getElementById('predsEmpty');
-  if (!fixtures.length) { cont.innerHTML = ''; empty.style.display = 'block'; return; }
-  empty.style.display = 'none';
-  cont.innerHTML = fixtures.map(f => `<div class="pred-card"><div class="pred-card-hd"><div class="pred-match">${f.teamA} vs ${f.teamB}</div><div class="pred-league-line">${f.date} · ${f.league}</div><div class="pred-pills"><div class="pred-pill pill-over">${f.classification.toUpperCase()} · ${f.combined}/10</div></div><div class="pred-conf-row"><span class="pred-stars" style="color:#F59E0B">★★★☆☆</span><div class="conf-bar-track"><div class="conf-bar-fill" style="width:${f.conf||50}%;background:#F59E0B"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:#F59E0B">${f.conf||50}%</span></div></div><div class="pred-body"><div class="pred-reasons-title">Analysis Snapshot</div><div class="pred-reason-item"><div class="reason-dot" style="background:#F59E0B"></div><div>${f.suggestion}</div></div><div class="pred-meta-row"><span class="pred-meta-item">Trap: <b style="color:${f.trapPct>=50?'var(--yf)':'var(--gf)'}">${f.trapPct}%</b></span><span class="pred-meta-item">OT Risk: <b style="color:${f.otRisk?'var(--yf)':'var(--gf)'}">${f.otRisk?'Yes':'Low'}</b></span><span class="pred-meta-item">Version: <b>${f.version||'3.2'}</b></span></div></div></div>`).join('');
+  if (!todayFx.length) { if(container) container.innerHTML = ''; if(empty) empty.style.display = 'block'; return; }
+  if(empty) empty.style.display = 'none';
+  if(container) {
+    container.innerHTML = todayFx.map(f => `<div class="fixture-item" style="margin-bottom:8px"><div class="fixture-teams">${f.teamA} vs ${f.teamB}</div><div class="fixture-date">${f.league}</div><div class="fixture-scores"><span class="fixture-badge ${f.classification}">${f.classification.toUpperCase()}</span><span class="fixture-score-chip">Score: ${f.combined}/10</span></div><div style="font-size:13px;color:var(--ac);margin-top:6px">${f.suggestion}</div></div>`).join('');
+  }
 }
 
 // ============================================================
-// GUIDE & NAVIGATION
+// NAVIGATION & HELPERS
 // ============================================================
-function renderGuide() {
-  document.getElementById('guideContent').innerHTML = `<div style="display:flex;flex-direction:column;gap:10px">${[
-    ['🆕 v3.4 UPGRADE', 'Game order reversed: Game 1 = Most Recent, Game 3 = Oldest. More intuitive data entry!'],
-    ['🔌 API-Sports Integration', 'Go to 🔌 API Key → Enter your API key → Auto-Fill button fetches live data for both teams + H2H.'],
-    ['STEP 1 — League Preset', 'Select the correct league. This calibrates ALL thresholds automatically.'],
-    ['STEP 2 — Enter or Auto-Fill', 'Either manually enter last 3 games OR click "Auto-Fill from API" after setting API key.'],
-    ['STEP 3 — Review & Analyze', 'After data entry, go to Analysis tab for full breakdown with 9 alerts.'],
-    ['STEP 4 — Q1 Tracker', 'Use Live Q1 tab during the game. Q1 thresholds adjust per league.'],
-    ['MIXED ZONE 5–7', 'NEVER bet blind. Always confirm live with Q1 data.'],
-  ].map(([t,d]) => `<div style="background:var(--dn);border-radius:8px;padding:10px;border:1px solid #1E3A5F"><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--ac);margin-bottom:4px">${t}</div><div style="font-size:12px;color:var(--lg);line-height:1.5">${d}</div></div>`).join('')}</div>`;
-  
-  const regions = {'🇺🇸 North America': ['NBA','NCAA'],'🏆 Top European': ['EuroLeague','FIBA Champions League','Turkish BSL','Spanish ACB','Italian Lega Basket','French Pro A','BBL (German)','Greek ESAKE','Israeli BSL','VTB United League'],'🌍 Mid European': ['Adriatic (ABA)','Lithuanian LKL','Polish PLK','Czech NBL','Dutch DBL','Belgian EuroMillions','Slovenian Liga Nova KBM','Serbian KLS','Ukrainian SUPERLEAGUE'],'🌿 Lower European': ['Georgian League','Swiss NLA','Hungarian NB I/A','Romanian LNBM','Portuguese LPB','Austrian ABL','Bosnian Premier League','Macedonian NLB'],'❓ Other': ['Low-Tier / Unknown']};
-  let refHTML = '';
-  Object.entries(regions).forEach(([reg, leagues]) => {
-    refHTML += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--ac);margin:10px 0 6px;text-transform:uppercase">${reg}</div>`;
-    refHTML += leagues.map(l => { const d = LEAGUES[l]; return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--dn);border-radius:6px;margin-bottom:4px;border:1px solid #1E3A5F"><span style="font-size:12px;font-weight:600;color:var(--lg)">${l}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--ac)">${d.range}</span></div>`; }).join('');
-  });
-  document.getElementById('leagueRefContent').innerHTML = refHTML;
-  
-  document.getElementById('upgradeLogContent').innerHTML = `<div style="display:flex;flex-direction:column;gap:6px">${[
-    ['🔄 GAME ORDER', 'Games now display Most Recent → Oldest. More intuitive data entry.'],
-    ['🔌 API AUTO-FILL', 'Full API-Sports v1 integration. Fetch teams, last 3 games, stats, and H2H with one click.'],
-    ['🔑 API KEY STORAGE', 'API key stored locally in your browser. Never sent to any external server except API-Sports.'],
-    ['📊 30+ LEAGUES', 'All original leagues restored with full thresholds. API support for NBA, EuroLeague, Turkish BSL, Spanish ACB, French Pro A, Italian, Greek, German BBL, Adriatic, Lithuanian, Polish, Czech, Israeli BSL.'],
-    ['⚡ RATE LIMIT AWARE', 'Free tier (100 req/day) — handles gracefully with fallback to manual entry.'],
-    ['🏠 PWA FULLY OFFLINE', 'Once loaded, works offline. Install to home screen for full app experience.'],
-  ].map(([tag,desc]) => `<div style="background:var(--dn);border-radius:8px;padding:10px;border:1px solid #1E3A5F"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span style="font-size:11px;font-weight:700;color:var(--mg)">${tag}</span></div><div style="font-size:12px;color:var(--lg);line-height:1.4">${desc}</div></div>`).join('')}</div>`;
-}
-
 function navigateTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-  const navBtn = document.getElementById('nav-' + page);
-  if (navBtn) navBtn.classList.add('active');
   if (page === 'analysis') runAnalysis();
   if (page === 'log') renderFixtureLog();
-  if (page === 'guide') renderGuide();
   if (page === 'preds') renderPredictions();
+  if (page === 'guide') renderGuide();
   window.scrollTo(0,0);
+}
+
+function renderGuide() {
+  const guide = document.getElementById('guideContent');
+  if (guide) {
+    guide.innerHTML = `<div style="background:var(--dn);border-radius:8px;padding:10px;border:1px solid #1E3A5F"><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--ac);margin-bottom:4px">📅 NEW: Fixture Selector</div><div>Click "Get Today's Games" → Select a game → Auto-fills both teams' last 3 games + H2H instantly!</div></div><div class="divider"></div><div style="background:var(--dn);border-radius:8px;padding:10px;border:1px solid #1E3A5F"><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--ac);margin-bottom:4px">🔌 API Setup</div><div>1. Click "API Key" → Enter your api-sports.io key<br>2. Click "Save" then "Test Connection"<br>3. Select league (NBA, EuroLeague, etc.)<br>4. Click "Get Today's Games" → Select a fixture<br>5. OR manually enter team names and game data below</div></div><div class="divider"></div><div style="background:var(--dn);border-radius:8px;padding:10px;border:1px solid #1E3A5F"><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--ac);margin-bottom:4px">📊 Manual Entry</div><div>Scroll down to Team A / Team B sections. Each has 3 game rows with input boxes for Scores, FGA, 3PA, and Defensive stats.</div></div>`;
+  }
 }
 
 function showToast(msg) {
@@ -1660,38 +1487,32 @@ function showToast(msg) {
 }
 
 function confirmReset() {
-  if (!confirm('Reset all input data?\nLeague, team names, game scores and defensive stats will be cleared.\n\nSaved Fixture Log is NOT affected.')) return;
-  state.league = "NBA";
-  state.teamAName = "TEAM A";
-  state.teamBName = "TEAM B";
+  if (!confirm('Reset all input data?')) return;
   state.gamesA = [{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0}];
   state.gamesB = [{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0},{ts:0,os:0,fga:0,tpa:0}];
   state.defA = [{fgPct:0,ast:0},{fgPct:0,ast:0},{fgPct:0,ast:0}];
   state.defB = [{fgPct:0,ast:0},{fgPct:0,ast:0},{fgPct:0,ast:0}];
   state.h2hGames = [{a:null,b:null},{a:null,b:null},{a:null,b:null}];
-  state.analysis = null;
   saveState();
   buildInputUI();
   showToast('🔄 All inputs cleared');
 }
 
 // ============================================================
-// INITIALIZATION
+// INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   buildInputUI();
   checkDataCompleteness();
   renderQ1Benchmarks();
+  renderFixtureLog();
+  renderPredictions();
+  renderGuide();
   updateApiStatusUI();
-  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
   document.getElementById('fxDetailModal').addEventListener('click', function(e) { if (e.target === this) closeFxModal(); });
   document.getElementById('apiModal').addEventListener('click', function(e) { if (e.target === this) closeApiModal(); });
-  // Set initial date for predictions
-  const predDateSub = document.getElementById('predDateSub');
-  if (predDateSub) {
-    predDateSub.textContent = new Date().toLocaleDateString('en-GB', {weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase();
-  }
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 });
 </script>
 </body>
