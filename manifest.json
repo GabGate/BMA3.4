@@ -1,7 +1,7 @@
 {
-  "name": "Basketball Matchup Analyzer v3.2",
+  "name": "Basketball Matchup Analyzer v3.4",
   "short_name": "BMA v3.2",
-  "description": "v3.2 — 3-Game H2H Scoreboard, Win Record, Data-Driven AH Lines, Trend Bonus",
+  "description": "v3.4 — 3-Game H2H Scoreboard, Win Record, Data-Driven AH Lines, Trend Bonus",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0D1B2A",
