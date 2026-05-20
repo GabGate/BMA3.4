@@ -1,0 +1,15 @@
+{
+  "name": "Basketball Matchup Analyzer v3.2",
+  "short_name": "BMA v3.2",
+  "description": "v3.2 — 3-Game H2H Scoreboard, Win Record, Data-Driven AH Lines, Trend Bonus",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0D1B2A",
+  "theme_color": "#0D1B2A",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["sports","utilities"]
+}
